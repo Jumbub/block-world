@@ -1,0 +1,26 @@
+.block-world {
+  width: 192px;
+  height: 288px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.world-col {
+  height: 192px;
+  width: 64px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.world-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.world-platform {
+  width: 192px;
+  height: 96px;
+  image-rendering: pixelated;
+}

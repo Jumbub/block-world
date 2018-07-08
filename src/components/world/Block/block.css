@@ -1,5 +1,10 @@
+.block {
+  margin-top: -36px;
+  cursor: pointer;
+}
+
 .block-image {
-  width: 68px;
+  width: 64px;
   height: 96px;
   image-rendering: pixelated;
   transition: 0.3s;
