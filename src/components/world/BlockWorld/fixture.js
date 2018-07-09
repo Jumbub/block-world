@@ -9,8 +9,22 @@ export default [
     component: BlockWorld,
     name: 'single',
     props: {
-      blocks: [
-        ['blue'],
+      stacked: [
+        [
+          {color: 'blue', key: 0}
+        ],
+        [],
+        []
+      ]
+    }
+  },
+  {
+    component: BlockWorld,
+    name: 'hooked',
+    props: {
+      hooked: {color: 'red', key: 0},
+      stacked: [
+        [],
         [],
         []
       ]
@@ -20,10 +34,20 @@ export default [
     component: BlockWorld,
     name: 'many',
     props: {
-      blocks: [
-        ['blue'],
+      stacked: [
+        [
+          {color: 'blue', key: 3}
+        ],
         [],
-        ['green', 'blue', 'red']
+        [
+          {color: 'blue', key: 0},
+          {color: 'green', key: 1},
+          {color: 'red', key: 2}
+        ],
+        [
+          {color: 'green', key: 5},
+          {color: 'green', key: 4},
+        ]
       ]
     }
   },

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import block from './block.png'
+import BlockImage from './block.png'
 import './block.css'
 
 class Block extends Component {
@@ -16,9 +16,7 @@ class Block extends Component {
     const { color } = this.props
 
     return (
-      <div className="block">
-        <img src={block} className={'block-image block-' + color} alt={color + ' block'}/>
-      </div>
+      <img src={BlockImage} className={'block block-' + color} alt={color + ' block'}/>
     )
   }
 }

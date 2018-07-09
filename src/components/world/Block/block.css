@@ -1,17 +1,14 @@
 .block {
-  margin-top: -36px;
+  width: 64px;
+  height: 96px;
+  margin-top: -32px;
+  image-rendering: pixelated;
+  transition: 0.3s;
   cursor: pointer;
 }
 
-.block-image {
-  width: 64px;
-  height: 96px;
-  image-rendering: pixelated;
-  transition: 0.3s;
-}
-
-.block-image:hover {
-  opacity: 0.9;
+.block:hover {
+  margin-bottom: -8px;
 }
 
 .block-green {

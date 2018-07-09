@@ -1,41 +1,64 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Block from '../Block'
-import Platform from './platform.png'
 import './block-world.css'
+import Hook from './hook.png'
+import Block from '../Block'
+import PlatformLeft from './platform-left.png'
+import PlatformRight from './platform-right.png'
+import PlatformMiddle from './platform-middle.png'
 
 class BlockWorld extends Component {
   static propTypes = {
-    blocks: PropTypes.arrayOf(
+    hooked: PropTypes.shape({
+      key: PropTypes.number,
+      color: PropTypes.string
+    }),
+    stacked: PropTypes.arrayOf(
       PropTypes.arrayOf(
         PropTypes.shape({
           key: PropTypes.number,
           color: PropTypes.string
         })
       )
-    )
+    ),
+    height: PropTypes.number
   }
 
   static defaultProps = {
-    blocks: [[], [], []]
+    hooked: null,
+    stacked: [[], [], []]
   }
 
   render() {
-    const { blocks } = this.props
+    const { stacked, hooked } = this.props
 
     return (
-      <div className="block-world" id="block-world">
-        <div className="world-row">
-          {blocks.map(columns =>
-            <div className="world-col">
-              {columns.reverse().map(block => 
-                <Block color={block} />
-              )}
+      <div className="world-container">
+        <div className="hook-container">
+          <img src={Hook} alt="world hook" className="hook"/>
+          {hooked &&
+            <div className="block-hooked">
+              <Block color={hooked.color} key={hooked.key}/>
             </div>
-          )}
+          }
         </div>
-        <img className="block world-platform" src={Platform} alt="block platform"/>
+        <div className="block-container">
+          <div className="container-row">
+            {stacked.map((column, i) =>
+              <div className="container-column">
+                {
+                  (i === 0 && <img src={PlatformLeft} alt="platform" className="block" key={'left-platform'} />)
+                  || (i === stacked.length - 1 && <img src={PlatformRight} alt="platform" className="block" key={'right-platform'}/>)
+                  || <img src={PlatformMiddle} alt="platform" className="block" key={'middle-platform-'+i}/>
+                }
+                {column.map(block => 
+                  <Block color={block.color} key={block.key}/>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     )
   }
