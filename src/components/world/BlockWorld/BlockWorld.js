@@ -4,9 +4,7 @@ import PropTypes from 'prop-types'
 import './block-world.css'
 import Hook from './hook.png'
 import Block from '../Block'
-import PlatformLeft from './platform-left.png'
-import PlatformRight from './platform-right.png'
-import PlatformMiddle from './platform-middle.png'
+import Platform from '../Platform'
 
 class BlockWorld extends Component {
   static propTypes = {
@@ -36,7 +34,7 @@ class BlockWorld extends Component {
     return (
       <div className="world-container">
         <div className="hook-container">
-          <img src={Hook} alt="world hook" className="hook"/>
+          <img src={Hook} alt="world hook" className="block hook"/>
           {hooked &&
             <div className="block-hooked">
               <Block color={hooked.color} key={hooked.key}/>
@@ -47,11 +45,6 @@ class BlockWorld extends Component {
           <div className="container-row">
             {stacked.map((column, i) =>
               <div className="container-column">
-                {
-                  (i === 0 && <img src={PlatformLeft} alt="platform" className="block" key={'left-platform'} />)
-                  || (i === stacked.length - 1 && <img src={PlatformRight} alt="platform" className="block" key={'right-platform'}/>)
-                  || <img src={PlatformMiddle} alt="platform" className="block" key={'middle-platform-'+i}/>
-                }
                 {column.map(block => 
                   <Block color={block.color} key={block.key}/>
                 )}
@@ -59,6 +52,7 @@ class BlockWorld extends Component {
             )}
           </div>
         </div>
+        <Platform width={stacked.length}/>
       </div>
     )
   }
