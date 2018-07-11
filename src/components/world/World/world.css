@@ -6,22 +6,6 @@
   overflow: hidden;
 }
 
-  .hook-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 96px;
-  }
-
-    .hook-container .hook {
-      z-index: 1;
-    }
-
-    .hook-container .block-hooked {
-      max-width: 64px;
-      min-height: 96px;
-      transition: 0.3s;
-    }
-
   .block-container {
     margin-top: 32px;
   }

@@ -1,12 +1,12 @@
-import BlockWorld from './BlockWorld'
+import World from './World'
 
 export default [
   {
-    component: BlockWorld,
+    component: World,
     name: 'default'
   },
   {
-    component: BlockWorld,
+    component: World,
     name: 'single',
     props: {
       stacked: [
@@ -19,7 +19,7 @@ export default [
     }
   },
   {
-    component: BlockWorld,
+    component: World,
     name: 'hooked',
     props: {
       hooked: {color: 'red', key: 0},
@@ -31,7 +31,7 @@ export default [
     }
   },
   {
-    component: BlockWorld,
+    component: World,
     name: 'many',
     props: {
       stacked: [

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './block-world.css'
-import Hook from './hook.png'
+import './world.css'
+import Hook from '../Hook'
 import Block from '../Block'
 import Platform from '../Platform'
 
-class BlockWorld extends Component {
+class World extends Component {
   static propTypes = {
     hooked: PropTypes.shape({
       key: PropTypes.number,
@@ -33,14 +33,7 @@ class BlockWorld extends Component {
 
     return (
       <div className="world-container">
-        <div className="hook-container">
-          <img src={Hook} alt="world hook" className="block hook"/>
-          {hooked &&
-            <div className="block-hooked">
-              <Block color={hooked.color} key={hooked.key}/>
-            </div>
-          }
-        </div>
+        <Hook block={hooked}/>
         <div className="block-container">
           <div className="container-row">
             {stacked.map((column, i) =>
@@ -58,4 +51,4 @@ class BlockWorld extends Component {
   }
 }
 
-export default BlockWorld
+export default World
