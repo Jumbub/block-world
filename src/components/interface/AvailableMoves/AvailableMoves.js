@@ -15,7 +15,6 @@ class AvailableMoves extends Component {
 
   render() {
     const { moves } = this.props
-console.log('[[', moves)
     return (
       <div className="available-moves">
         <div className="label">

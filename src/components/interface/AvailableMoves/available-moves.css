@@ -2,9 +2,9 @@
   font-family: 'Press Start 2P', cursive;
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  padding-bottom: 0;
   background-color: lightgray;
+  width: 256px;
+  padding: 16px;
 }
 
   .available-moves .label {
@@ -16,5 +16,4 @@
     font-family: 'Press Start 2P', cursive;
     font-size: 16px;
     padding: 10px 15px;
-    margin-bottom: 10px;
   }
