@@ -7,6 +7,13 @@ export default [
   },
   {
     component: Block,
+    name: 'delete action',
+    props: {
+      onDelete: () => alert('delete action!')
+    }
+  },
+  {
+    component: Block,
     name: 'red',
     props: {
       color: 'red'
@@ -24,6 +31,27 @@ export default [
     name: 'green',
     props: {
       color: 'green'
+    }
+  },
+  {
+    component: Block,
+    name: 'purple',
+    props: {
+      color: 'purple'
+    }
+  },
+  {
+    component: Block,
+    name: 'teal',
+    props: {
+      color: 'teal'
+    }
+  },
+  {
+    component: Block,
+    name: 'pink',
+    props: {
+      color: 'pink'
     }
   },
 ]

@@ -5,18 +5,20 @@ import './block.css'
 
 class Block extends Component {
   static propTypes = {
-    color: PropTypes.string
+    color: PropTypes.string,
+    onDelete: PropTypes.func
   }
 
   static defaultProps = {
-    color: 'original'
+    color: 'original',
+    onDelete: () => {}
   }
 
   render() {
-    const { color } = this.props
+    const { color, onDelete } = this.props
 
     return (
-      <img src={BlockImage} className={'block block-' + color} alt={color + ' block'}/>
+      <img src={BlockImage} className={'block block-' + color} alt={color + ' block'} onClick={onDelete}/>
     )
   }
 }

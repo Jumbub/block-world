@@ -7,23 +7,22 @@ import Block from '../Block'
 
 class Hook extends Component {
   static propTypes = {
-    block: PropTypes.shape({
-      key: PropTypes.number,
-      color: PropTypes.string
-    })
+    children: PropTypes.element
+  }
+
+  static defaultProps = {
+    children: null
   }
 
   render() {
-    const { block } = this.props
+    const { children } = this.props
 
     return (
       <div className="hook-container">
         <img src={HookImage} alt="world hook" className="block hook"/>
-        {block &&
-          <div className="block-hooked">
-            <Block color={block.color} key={block.key}/>
-          </div>
-        }
+        <div className="block-hooked">
+          {children}
+        </div>
       </div>
     )
   }

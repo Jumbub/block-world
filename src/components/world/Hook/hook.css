@@ -9,7 +9,5 @@
   }
 
   .hook-container .block-hooked {
-    max-width: 64px;
-    min-height: 96px;
     transition: 0.3s;
   }

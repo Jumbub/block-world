@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import './world.css'
 import Hook from '../Hook'
 import Block from '../Block'
+import AirBlock from '../AirBlock'
 import Platform from '../Platform'
 
 class World extends Component {
@@ -25,15 +26,18 @@ class World extends Component {
 
   static defaultProps = {
     hooked: null,
-    stacked: [[], [], []]
+    stacked: [[], [], []],
+    height: 4
   }
 
   render() {
-    const { stacked, hooked } = this.props
+    const { stacked, hooked, height } = this.props
 
     return (
       <div className="world-container">
-        <Hook block={hooked}/>
+        <Hook>
+          {hooked && <Block color={hooked.color} key={hooked.key}/>}
+        </Hook>
         <div className="block-container">
           <div className="container-row">
             {stacked.map((column, i) =>
@@ -41,6 +45,7 @@ class World extends Component {
                 {column.map(block => 
                   <Block color={block.color} key={block.key}/>
                 )}
+                {column.length < height && <AirBlock/>}
               </div>
             )}
           </div>

@@ -1,0 +1,15 @@
+.air-block {
+  width: 64px;
+  height: 96px;
+  margin-top: -32px;
+  image-rendering: pixelated;
+  transition: 0.3s;
+  cursor: pointer;
+  opacity: 0.1;
+  filter: saturate(0);
+}
+
+.air-block:hover {
+  margin-top: -28px;
+  margin-bottom: -4px;
+}

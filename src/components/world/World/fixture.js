@@ -34,6 +34,7 @@ export default [
     component: World,
     name: 'many',
     props: {
+      hooked: {color: 'blue', key: 0},
       stacked: [
         [
           {color: 'blue', key: 3}
