@@ -8,8 +8,3 @@
   opacity: 0.1;
   filter: saturate(0);
 }
-
-.air-block:hover {
-  margin-top: -28px;
-  margin-bottom: -4px;
-}

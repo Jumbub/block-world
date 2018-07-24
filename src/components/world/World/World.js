@@ -21,31 +21,38 @@ class World extends Component {
         })
       )
     ),
-    height: PropTypes.number
+    height: PropTypes.number,
+    addBlock: PropTypes.func,
+    removeBlock: PropTypes.func
   }
 
   static defaultProps = {
     hooked: null,
     stacked: [[], [], []],
-    height: 4
+    height: 4,
+    removeBlock: () => {},
+    addBlock: () => {},
   }
 
   render() {
-    const { stacked, hooked, height } = this.props
+    const { stacked, hooked, height, addBlock, removeBlock } = this.props
 
     return (
       <div className="world-container">
         <Hook>
-          {hooked && <Block color={hooked.color} key={hooked.key}/>}
+          {hooked
+            ? <Block color={hooked.color} key={hooked.key}/>
+            : <AirBlock onClick={() => addBlock(-1)}/>
+          }
         </Hook>
         <div className="block-container">
           <div className="container-row">
             {stacked.map((column, i) =>
               <div className="container-column">
                 {column.map(block => 
-                  <Block color={block.color} key={block.key}/>
+                  <Block color={block.color} key={block.key} onClick={() => removeBlock(block.key)} />
                 )}
-                {column.length < height && <AirBlock/>}
+                {column.length < height && <AirBlock onClick={() => addBlock(i)}/>}
               </div>
             )}
           </div>

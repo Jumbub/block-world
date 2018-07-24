@@ -6,19 +6,19 @@ import './block.css'
 class Block extends Component {
   static propTypes = {
     color: PropTypes.string,
-    onDelete: PropTypes.func
+    onClick: PropTypes.func
   }
 
   static defaultProps = {
     color: 'original',
-    onDelete: () => {}
+    onClick: () => {}
   }
 
   render() {
-    const { color, onDelete } = this.props
+    const { color, onClick } = this.props
 
     return (
-      <img src={BlockImage} className={'block block-' + color} alt={color + ' block'} onClick={onDelete}/>
+      <img src={BlockImage} className={'block block-anim block-' + color} alt={color + ' block'} onClick={onClick}/>
     )
   }
 }

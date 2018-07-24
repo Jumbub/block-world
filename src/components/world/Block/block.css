@@ -4,10 +4,10 @@
   margin-top: -32px;
   image-rendering: pixelated;
   transition: 0.3s;
-  cursor: pointer;
 }
 
-.block:hover {
+.block-anim:hover {
+  cursor: pointer;
   margin-top: -28px;
   margin-bottom: -4px;
 }

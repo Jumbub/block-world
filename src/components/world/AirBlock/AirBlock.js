@@ -16,7 +16,7 @@ class AirBlock extends Component {
     const { onClick } = this.props
 
     return (
-      <img src={BlockImage} onClick={onClick} className="air-block" alt="air block"/>
+      <img src={BlockImage} onClick={onClick} className="air-block block-anim" alt="air block"/>
     )
   }
 }

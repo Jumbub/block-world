@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import './hook.css'
 import HookImage from './hook.png'
-import Block from '../Block'
 
 class Hook extends Component {
   static propTypes = {
