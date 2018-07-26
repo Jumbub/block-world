@@ -1,4 +1,4 @@
-# Block World AI
+# Block World
 
 Stacking blocks using decision tree learning.
 
