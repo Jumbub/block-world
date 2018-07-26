@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   background-color: gray;
-  padding: 32px;
+  padding: 16px;
 }
 
   .setup-world .world-view {
@@ -11,6 +11,7 @@
     background-color: darkgray;
     align-items: center;
     outline: 16px solid darkgray;
+    margin: 16px;
   }
 
   .setup-world .target-world {

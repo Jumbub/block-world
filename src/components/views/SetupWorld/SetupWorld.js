@@ -29,30 +29,33 @@ class SetupWorld extends Component {
   static defaultProps = {
     current: [],
     target: [],
-    width: 5,
-    height: 4,
+    width: 3,
+    height: 3,
   }
 
   generateWorld(width, world) {
     const hooked = world.find(block => block.hooked)
-    // alert('hooked > ' + hooked)
 
     let stacked = []
-    for (let i = width - 1; i >= 0; i--) {
-      stacked[i] = []
-    }
+    for (let col = 0; col < width; col++) {
+      stacked[col] = []
 
-    const tops = world.filter(block => block.clear)
-    tops.forEach(block => {
-      stacked[block.column][0] = block
-    })
-    const mids = world.filter(block =>
-      tops.find(top => top.key === block.above)
-    )
-    mids.forEach(block => {
-      stacked[block.column][1] = block
-    })
-    console.log(stacked)
+      const top = world.find(block => block.clear && block.column === col)
+      if (top) stacked[col].push(top)
+      let lastKey = top && top.key || null
+
+      while (lastKey !== null) {
+        const below = world.find(block => block.above === lastKey)
+
+        if (below) {
+          stacked[col].push(below)
+          lastKey = below.key
+        } else {
+          lastKey = null
+        }
+      }
+    }
+    console.log('>>>>', stacked, hooked || null)
 
     return {
       hooked: hooked,
