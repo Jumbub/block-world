@@ -30,34 +30,36 @@ class World extends Component {
     hooked: null,
     stacked: [[], [], []],
     height: 4,
-    removeBlock: () => {},
-    addBlock: () => {},
+    removeBlock: (key, color) => {},
+    addBlock: key => {},
   }
 
   render() {
     const { stacked, hooked, height, addBlock, removeBlock } = this.props
 
     return (
-      <div className="world-container">
+      <div className="world-container" style={{height: 64*(height+3.5)}}>
         <Hook>
           {hooked
-            ? <Block color={hooked.color} key={hooked.key}/>
-            : <AirBlock onClick={() => addBlock(-1)}/>
+            ? <Block color={hooked.color} key={hooked.key} onClick={() => removeBlock(hooked.key)} />
+            : <AirBlock onClick={() => addBlock(-1)} onClick={() => addBlock(-1, 'red')} />
           }
         </Hook>
-        <div className="block-container">
-          <div className="container-row">
-            {stacked.map((column, i) =>
-              <div className="container-column">
-                {column.map(block => 
-                  <Block color={block.color} key={block.key} onClick={() => removeBlock(block.key)} />
-                )}
-                {column.length < height && <AirBlock onClick={() => addBlock(i)}/>}
-              </div>
-            )}
+        <div>
+          <div className="block-container">
+            <div className="container-row">
+              {stacked.map((column, columnIndex) =>
+                <div className="container-column">
+                  {column.map(block => 
+                    <Block color={block.color} key={block.key} onClick={() => removeBlock(block.key)} />
+                  )}
+                  {column.length < height && <AirBlock onClick={() => addBlock(columnIndex, 'red')}/>}
+                </div>
+              )}
+            </div>
           </div>
+          <Platform width={stacked.length}/>
         </div>
-        <Platform width={stacked.length}/>
       </div>
     )
   }

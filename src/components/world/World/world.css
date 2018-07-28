@@ -1,9 +1,11 @@
 .world-container {
-  background-color: lightgray;
-
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  
+  background-color: lightgray;
   overflow: hidden;
+  padding: 16px;
 }
 
   .block-container {
