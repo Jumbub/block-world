@@ -88,7 +88,6 @@ class SetupWorld extends Component {
     return !isNaN(parseFloat(n)) && isFinite(n)
   } 
 
-  /* TODO: move to the World component */
   generateWorld(width, world) {
     const hooked = world.find(block => block.hooked)
 
@@ -106,6 +105,7 @@ class SetupWorld extends Component {
         block = world.find(block => block.key === prevKey)
         stacked[col].push(block)
       }
+      stacked[col] = stacked[col].reverse()
     }
 
     return {

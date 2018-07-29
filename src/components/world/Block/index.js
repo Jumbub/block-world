@@ -1,1 +1,1 @@
-export { default } from './Block'
+export { default, COLORS } from './Block'

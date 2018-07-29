@@ -1,0 +1,8 @@
+.selector-block {
+  flex-direction: row;
+  max-width: 64px;
+}
+
+  .selector-block .block {
+    width: 33.33%;
+  }

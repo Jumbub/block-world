@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Popover, Button } from 'he-react-ui'
+
 import BlockImage from '../Block/block.png'
+import SelectorBlock from '../SelectorBlock'
 import './air-block.css'
 
 class AirBlock extends Component {
@@ -12,11 +15,22 @@ class AirBlock extends Component {
     onClick: () => {}
   }
 
+  state = {
+    hovering: false
+  }
+
   render() {
     const { onClick } = this.props
+    const { hovering } = this.state
 
     return (
-      <img src={BlockImage} onClick={onClick} className="air-block block-anim" alt="air block"/>
+      <div onMouseEnter={() => this.setState({hovering: true})}
+        onMouseLeave={() => this.setState({hovering: false})}>
+        { hovering
+          ? <SelectorBlock onClick={onClick} />
+          : <img src={BlockImage} className="air-block block-anim" alt="air block"/>
+        }
+      </div>
     )
   }
 }

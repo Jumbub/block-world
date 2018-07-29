@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import BlockImage from './block.png'
 import './block.css'
 
+const COLORS = [ 'red', 'green', 'blue' ]
+
 class Block extends Component {
   static propTypes = {
     color: PropTypes.string,
@@ -18,9 +20,15 @@ class Block extends Component {
     const { color, onClick } = this.props
 
     return (
-      <img src={BlockImage} className={'block block-anim block-' + color} alt={color + ' block'} onClick={onClick}/>
+      <img
+        src={BlockImage}
+        className={'block block-anim block-' + color}
+        alt={color + ' block'}
+        onClick={onClick}
+      />
     )
   }
 }
 
 export default Block
+export { COLORS }

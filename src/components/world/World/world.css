@@ -6,6 +6,7 @@
   background-color: lightgray;
   overflow: hidden;
   padding: 16px;
+  user-select: none;
 }
 
   .block-container {
