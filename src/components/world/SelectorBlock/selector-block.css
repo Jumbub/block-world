@@ -1,8 +1,21 @@
 .selector-block {
   flex-direction: row;
   max-width: 64px;
+  opacity: 0.2;
+  filter: saturate(0);
 }
+
+  .selector-block:hover {
+    transition: 0.s3;
+    filter: saturate(1);
+    opacity: 1;
+  }
 
   .selector-block .block {
     width: 33.33%;
+    opacity: 0.5;
+  }
+
+  .selector-block .block-anim:hover {
+    opacity: 0.5;
   }
