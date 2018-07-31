@@ -1,32 +1,16 @@
 import SetupWorld from './SetupWorld'
-
-import React, { Component, Fragment } from 'react'
-
-class SetupWorldWrapper extends Component {
-  state = {
-    world: []
-  }
-  render() {
-    return <SetupWorld
-      world={this.state.world}
-      width={this.props.width || undefined}
-      height={this.props.height || undefined}
-      title={this.props.title || undefined}
-      updateWorld={newWorld => this.setState({world: newWorld})}
-    />
-  }
-}
+import SetupWorldWrapper from './SetupWorldWrapper'
 
 export default [
   {
-    component: SetupWorldWrapper,
-    name: 'default'
+    component: SetupWorld,
+    name: 'default',
   },
   {
     component: SetupWorldWrapper,
-    name: 'tall in target',
+    name: 'wrapped tall world',
     props: {
-      title: 'Target world',
+      title: 'Tall world',
       width: 2,
       height: 5,
       world: [
@@ -38,9 +22,9 @@ export default [
   },
   {
     component: SetupWorldWrapper,
-    name: 'short in initial',
+    name: 'wrapped short world',
     props: {
-      title: 'Initial world',
+      title: 'Short world',
       width: 5,
       height: 2,
       world: [
