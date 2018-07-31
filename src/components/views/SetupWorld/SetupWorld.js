@@ -6,27 +6,48 @@ import './setup-world.css'
 import World from '../../world/World'
 import Module from '../../interface/Module'
 
+let LAST_KEY = 0
+
 class SetupWorld extends Component {
+  static propTypes = {
+    updateWorld: PropTypes.func,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    title: PropTypes.string,
+    world: PropTypes.arrayOf(
+      PropTypes.shape({
+        key: PropTypes.number,
+        color: PropTypes.string,
+        hooked: PropTypes.boolean,
+        clear: PropTypes.boolean,
+        above: PropTypes.number,
+        column: PropTypes.number
+      })
+    )
+  }
+
+  static defaultProps = {
+    updateWorld: () => {},
+    width: 3,
+    height: 3,
+    world: [],
+  }
+
   constructor() {
     super()
-
-    this.state = {
-      current: [],
-      target: [],
-      width: 3,
-      height: 3,
-      nextKey: 0,
-    }
 
     this.addBlock = this.addBlock.bind(this)
     this.removeBlock = this.removeBlock.bind(this)
   }
 
+  shouldComponentUpdate() {
+    return true
+  }
 
-  addBlock(worldLabel, col, color = 'red') {
-    let world = this.state[worldLabel]
+  addBlock(col, color = 'red') {
+    let world = this.props.world
     let lastBlock = world.length > 0 && world.reduce((cur, block) => block.key > cur && block.key || cur)
-    const key = this.state.nextKey
+    const key = LAST_KEY
 
     let above = world.find(block => block.column === col && block.clear)
     let aboveKey = null
@@ -45,14 +66,12 @@ class SetupWorld extends Component {
     }
     world.push(block)
 
-    this.setState({
-      [worldLabel]: world,
-      nextKey: key + 1
-    })
+    this.props.updateWorld(world)
+    LAST_KEY += 1
   }
 
-  removeBlock(worldLabel, key) {
-    let world = this.state[worldLabel]
+  removeBlock(key) {
+    let world = this.props.world
     const removeBlock = world.find(block => block.key === key)
     const aboveBlock = world.find(block => block.above === key)
     const belowBlock = world.find(block => block.key === removeBlock.above)
@@ -70,9 +89,8 @@ class SetupWorld extends Component {
     world = world.filter(
       block => block.key !== key
     )
-    this.setState({
-      [worldLabel]: world
-    })
+
+    this.props.updateWorld(world)
   }
 
   isNumber(n) {
@@ -107,32 +125,20 @@ class SetupWorld extends Component {
 
   render() {
     const { addBlock, removeBlock } = this
-    const { height, current, target, width } = this.state
+    const { height, width, world, title } = this.props
 
-    const currentWorld = this.generateWorld(width, current)
-    const targetWorld = this.generateWorld(width, target)
+    const renderedWorld = this.generateWorld(width, world)
 
     return (
-      <React.Fragment>
-        <Module title="Start world">
-          <World
-            hooked={currentWorld.hooked}
-            stacked={currentWorld.stacked}
-            height={height}
-            addBlock={(col, color) => addBlock('current', col, color)} 
-            removeBlock={key => removeBlock('current', key)}
-          />
-        </Module>
-        <Module title="Start world">
-          <World
-            hooked={targetWorld.hooked}
-            stacked={targetWorld.stacked}
-            height={height}
-            addBlock={(col, color) => addBlock('target', col, color)} 
-            removeBlock={key => removeBlock('target', key)}
-          />
-        </Module>
-      </React.Fragment>
+      <Module title={title}>
+        <World
+          hooked={renderedWorld.hooked}
+          stacked={renderedWorld.stacked}
+          height={height}
+          addBlock={addBlock} 
+          removeBlock={removeBlock}
+        />
+      </Module>
     )
   }
 }
