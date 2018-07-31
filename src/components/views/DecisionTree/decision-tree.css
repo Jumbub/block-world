@@ -1,11 +1,5 @@
 .decision-tree {
-  background-color: gray;
 }
-
-  .decision-tree .tree {
-    background-color: lightgray;
-    margin: 16px;
-  }
 
   .decision-tree svg.tree path.link {
     fill: none;

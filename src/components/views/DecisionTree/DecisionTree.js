@@ -4,6 +4,7 @@ import Tree from 'react-tree-graph'
 
 import './decision-tree.css'
 import 'react-tree-graph/dist/style.css'
+import Module from '../../interface/Module'
 
 class DecisionTree extends Component {
   static propTypes = {
@@ -18,7 +19,7 @@ class DecisionTree extends Component {
     const { tree } = this.props
 
     return (
-      <div className="decision-tree">
+      <Module title="Decision tree view">
         <Tree
           data={tree}
           height={400}
@@ -27,7 +28,7 @@ class DecisionTree extends Component {
             className: 'tree'
           }}
         />
-      </div>
+      </Module>
     )
   }
 }
