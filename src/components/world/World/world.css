@@ -3,8 +3,6 @@
   flex-direction: column;
   justify-content: space-between;
   
-  overflow: hidden;
-  padding: 16px;
   user-select: none;
 }
 

@@ -38,7 +38,7 @@ class World extends Component {
     const { stacked, hooked, height, addBlock, removeBlock } = this.props
 
     return (
-      <div className="world-container" style={{height: 64*(height+3.5)}}>
+      <div className="world-container" style={{height: 64*(height+4)}}>
         <Hook>
           {hooked
             ? <Block color={hooked.color} key={hooked.key} onClick={() => removeBlock(hooked.key)} />
