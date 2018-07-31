@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import BlockImage from './block.png'
 import './block.css'
 
-const COLORS = [ 'red', 'green', 'blue' ]
-
 class Block extends Component {
   static propTypes = {
     color: PropTypes.string,
@@ -31,4 +29,3 @@ class Block extends Component {
 }
 
 export default Block
-export { COLORS }

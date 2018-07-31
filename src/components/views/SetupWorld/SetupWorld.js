@@ -4,17 +4,7 @@ import { Heading } from 'he-react-ui'
 
 import './setup-world.css'
 import World from '../../world/World'
-
-/*const WorldType = PropTypes.arrayOf(
-  PropTypes.shape({
-    key: PropTypes.number,
-    hooked: PropTypes.bool,
-    clear: PropTypes.bool,
-    above: PropTypes.number,
-    column: PropTypes.number,
-    color: PropTypes.string
-  })
-)*/
+import Module from '../../interface/Module'
 
 class SetupWorld extends Component {
   constructor() {
@@ -32,6 +22,7 @@ class SetupWorld extends Component {
     this.removeBlock = this.removeBlock.bind(this)
   }
 
+
   addBlock(worldLabel, col, color = 'red') {
     let world = this.state[worldLabel]
     let lastBlock = world.length > 0 && world.reduce((cur, block) => block.key > cur && block.key || cur)
@@ -47,8 +38,8 @@ class SetupWorld extends Component {
     const block = {
       key: key,
       color: color,
-      hooked: col === -1,
-      clear: col !== -1,
+      hooked: col === null,
+      clear: col !== null,
       above: aboveKey,
       column: col
     }
@@ -122,9 +113,8 @@ class SetupWorld extends Component {
     const targetWorld = this.generateWorld(width, target)
 
     return (
-      <div className="setup-world">
-        <div className="world-view">
-          <Heading>Current</Heading>
+      <React.Fragment>
+        <Module title="Start world">
           <World
             hooked={currentWorld.hooked}
             stacked={currentWorld.stacked}
@@ -132,9 +122,8 @@ class SetupWorld extends Component {
             addBlock={(col, color) => addBlock('current', col, color)} 
             removeBlock={key => removeBlock('current', key)}
           />
-        </div>
-        <div className="world-view target-world">
-          <Heading>Target</Heading>
+        </Module>
+        <Module title="Start world">
           <World
             hooked={targetWorld.hooked}
             stacked={targetWorld.stacked}
@@ -142,8 +131,8 @@ class SetupWorld extends Component {
             addBlock={(col, color) => addBlock('target', col, color)} 
             removeBlock={key => removeBlock('target', key)}
           />
-        </div>
-      </div>
+        </Module>
+      </React.Fragment>
     )
   }
 }

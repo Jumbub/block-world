@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Popover, Button } from 'he-react-ui'
 
 import PlatformLeft from '../Platform/platform-left.png'
 import PlatformRight from '../Platform/platform-right.png'
 import PlatformMiddle from '../Platform/platform-middle.png'
 import './selector-block.css'
-import { COLORS } from '../Block'
 
 class SelectorBlock extends Component {
   static propTypes = {

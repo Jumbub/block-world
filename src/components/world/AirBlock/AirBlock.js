@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Popover, Button } from 'he-react-ui'
 
 import BlockImage from '../Block/block.png'
 import SelectorBlock from '../SelectorBlock'

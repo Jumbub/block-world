@@ -19,13 +19,13 @@ export default [
       height: 3,
       nextKey: 4,
       current: [
-        { key: 0, color: 'red', hooked: true, clear: false, above: null, column: null },
-        { key: 1, color: 'green', hooked: false, clear: true, above: null, column: 0 },
-        { key: 2, color: 'blue', hooked: false, clear: false, above: 1, column: 0 }
+        { key: 0, color: 'red', hooked: true, clear: null, above: null, column: null },
+        { key: 1, color: 'green', hooked: false, clear: false, above: null, column: 0 },
+        { key: 2, color: 'blue', hooked: false, clear: true, above: 1, column: 0 }
       ],
       target: [
-        { key: 3, color: 'blue', hooked: false, clear: true, above: -1, column: 1 }
+        { key: 0, color: 'blue', hooked: false, clear: true, above: null, column: 1 }
       ]
     }
-  },
+  }
 ]

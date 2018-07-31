@@ -42,7 +42,7 @@ class World extends Component {
         <Hook>
           {hooked
             ? <Block color={hooked.color} key={hooked.key} onClick={() => removeBlock(hooked.key)} />
-            : <AirBlock onClick={() => addBlock(-1)} onClick={color => addBlock(-1, color)} />
+            : <AirBlock onClick={() => addBlock(null)} onClick={color => addBlock(null, color)} />
           }
         </Hook>
         <div>
@@ -50,7 +50,7 @@ class World extends Component {
             <div className="container-row">
               {stacked.map((column, columnIndex) =>
                 <div className="container-column">
-                  {column.map(block => 
+                  {column.map(block =>
                     <Block color={block.color} key={block.key} onClick={() => removeBlock(block.key)} />
                   )}
                   {column.length < height && <AirBlock onClick={color => addBlock(columnIndex, color)}/>}

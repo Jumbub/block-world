@@ -6,7 +6,7 @@
 }
 
   .selector-block:hover {
-    transition: 0.s3;
+    transition: 0.5s;
     filter: saturate(1);
     opacity: 1;
   }
