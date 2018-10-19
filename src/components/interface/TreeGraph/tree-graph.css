@@ -1,0 +1,25 @@
+.tree-graph {
+}
+
+  .tree-graph svg.tree path.link {
+    fill: none;
+    stroke: #2593B8;
+    stroke-width: 1.5px;
+  }
+
+  .tree-graph svg.tree .node {
+    cursor: pointer; 
+  }
+
+    .tree-graph svg.tree .node circle {
+      fill: #F3F3FF;
+      stroke: #2593B8;
+      stroke-width: 1.5px;
+    }
+
+    .tree-graph svg.tree .node text {
+      font-size: 13px;
+      background-color: #444;
+      fill: #F4F4F4;
+      text-shadow: 0 1px 4px black;
+    }
