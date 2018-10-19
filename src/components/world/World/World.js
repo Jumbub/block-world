@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import './world.css'
 import Hook from '../Hook'
 import Block from '../Block'
-import AirBlock from '../AirBlock'
+import SelectorBlock from '../SelectorBlock'
 import Platform from '../Platform'
 
 class World extends Component {
@@ -42,7 +42,7 @@ class World extends Component {
         <Hook>
           {hooked
             ? <Block color={hooked.color} key={hooked.key} onClick={() => removeBlock(hooked.key)} />
-            : <AirBlock onClick={() => addBlock(null)} onClick={color => addBlock(null, color)} />
+            : <SelectorBlock onClick={() => addBlock(null)} onClick={color => addBlock(null, color)} />
           }
         </Hook>
         <div>
@@ -53,7 +53,7 @@ class World extends Component {
                   {column.map(block =>
                     <Block color={block.color} key={block.key} onClick={() => removeBlock(block.key)} />
                   )}
-                  {column.length < height && <AirBlock onClick={color => addBlock(columnIndex, color)}/>}
+                  {column.length < height && <SelectorBlock onClick={color => addBlock(columnIndex, color)}/>}
                 </div>
               )}
             </div>
