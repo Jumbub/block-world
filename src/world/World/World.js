@@ -6,43 +6,38 @@ import Hook from '../Hook'
 import Block from '../Block'
 import SelectorBlock from '../SelectorBlock'
 import Platform from '../Platform'
+import { BLOCK_COLORS } from '../Block'
 
 class World extends Component {
   static propTypes = {
-    hooked: PropTypes.shape({
-      key: PropTypes.number,
-      color: PropTypes.string
-    }),
+    hooked: PropTypes.oneOf(BLOCK_COLORS),
     stacked: PropTypes.arrayOf(
       PropTypes.arrayOf(
-        PropTypes.shape({
-          key: PropTypes.number,
-          color: PropTypes.string
-        })
+        PropTypes.oneOf(BLOCK_COLORS)
       )
     ),
     height: PropTypes.number,
-    addBlock: PropTypes.func,
-    removeBlock: PropTypes.func
+    pushColumn: PropTypes.func,
+    popColumn: PropTypes.func
   }
 
   static defaultProps = {
     hooked: null,
     stacked: [[], [], []],
     height: 4,
-    removeBlock: (key, color) => {},
-    addBlock: key => {},
+    pushColumn: (column, color) => {},
+    popColumn: column => {},
   }
 
   render() {
-    const { stacked, hooked, height, addBlock, removeBlock } = this.props
+    const { hooked, stacked, height, pushColumn, popColumn } = this.props
 
     return (
       <div className="world-container" style={{height: 64*(height+4)}}>
         <Hook>
           {hooked
-            ? <Block color={hooked.color} key={hooked.key} onClick={() => removeBlock(hooked.key)} />
-            : <SelectorBlock onClick={color => addBlock(null, color)} />
+            ? <Block color={hooked} onClick={() => popColumn(-1)} />
+            : <SelectorBlock onClick={color => pushColumn(-1, color)} />
           }
         </Hook>
         <div>
@@ -50,10 +45,13 @@ class World extends Component {
             <div className="container-row">
               {stacked.map((column, columnIndex) =>
                 <div className="container-column">
-                  {column.map(block =>
-                    <Block color={block.color} key={block.key} onClick={() => removeBlock(block.key)} />
+                  {column.map((block, rowIndex) =>
+                    <Block
+                      color={block}
+                      onClick={rowIndex === column.length-1 ? () => popColumn(rowIndex) : null}
+                    />
                   )}
-                  {column.length < height && <SelectorBlock onClick={color => addBlock(columnIndex, color)}/>}
+                  {column.length < height && <SelectorBlock onClick={color => pushColumn(columnIndex, color)}/>}
                 </div>
               )}
             </div>

@@ -11,45 +11,51 @@ export default [
     props: {
       stacked: [
         [
-          {color: 'blue', key: 0}
+          'blue'
         ],
         [],
         []
-      ]
+      ],
+      pushColumn: (column, color) => alert('pushing ' + color + ' to column #' + column),
+      popColumn: column => alert('popping column #' + column),
     }
   },
   {
     component: World,
     name: 'hooked',
     props: {
-      hooked: {color: 'red', key: 0},
+      hooked: 'red',
       stacked: [
         [],
         [],
         []
-      ]
+      ],
+      pushColumn: (column, color) => alert('pushing ' + color + ' to column #' + column),
+      popColumn: column => alert('popping column #' + column),
     }
   },
   {
     component: World,
     name: 'many',
     props: {
-      hooked: {color: 'blue', key: 0},
+      hooked: 'blue',
       stacked: [
         [
-          {color: 'blue', key: 3}
+          'blue'
         ],
         [],
         [
-          {color: 'blue', key: 0},
-          {color: 'green', key: 1},
-          {color: 'red', key: 2}
+          'blue',
+          'green',
+          'red'
         ],
         [
-          {color: 'green', key: 5},
-          {color: 'green', key: 4},
+          'green',
+          'green',
         ]
-      ]
+      ],
+      pushColumn: (column, color) => alert('pushing ' + color + ' to column #' + column),
+      popColumn: column => alert('popping column #' + column),
     }
   },
 ]
