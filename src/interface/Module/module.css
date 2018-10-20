@@ -1,6 +1,9 @@
 .module {
   background-color: darkgray;
   display: inline-block;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
 }
 
   .module-items {
@@ -18,4 +21,6 @@
       margin: 16px;
       padding: 16px;
       background-color: lightgray;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      border-radius: 5px;
     }

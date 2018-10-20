@@ -1,37 +1,34 @@
 import SetupWorld from './SetupWorld'
-import SetupWorldWrapper from './SetupWorldWrapper'
 
 export default [
   {
     component: SetupWorld,
-    name: 'default',
+    name: 'default'
   },
   {
-    component: SetupWorldWrapper,
-    name: 'wrapped tall world',
+    component: SetupWorld,
+    name: 'empty world',
     props: {
-      title: 'Tall world',
-      width: 2,
-      height: 5,
-      world: [
-        { key: 0, color: 'red', hooked: true, clear: null, above: null, column: null },
-        { key: 1, color: 'green', hooked: false, clear: false, above: null, column: 0 },
-        { key: 2, color: 'blue', hooked: false, clear: true, above: 1, column: 0 }
-      ]
+      width: 3,
+      height: 3,
+      onUpdate: facts => console.log(facts)
     }
   },
   {
-    component: SetupWorldWrapper,
-    name: 'wrapped short world',
+    component: SetupWorld,
+    name: 'world with blocks',
     props: {
-      title: 'Short world',
-      width: 5,
-      height: 2,
-      world: [
-        { key: 0, color: 'red', hooked: true, clear: null, above: null, column: null },
-        { key: 1, color: 'green', hooked: false, clear: false, above: null, column: 0 },
-        { key: 2, color: 'blue', hooked: false, clear: true, above: 1, column: 0 }
-      ]
+      width: 3,
+      height: 3,
+      onUpdate: facts => console.log(facts)
+    },
+    state: {
+      stacked: [
+        ['red', 'blue', 'green'],
+        ['blue', 'green'],
+        ['green']
+      ],
+      hooked: 'red'
     }
-  }
+  },
 ]

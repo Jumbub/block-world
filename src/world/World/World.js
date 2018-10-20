@@ -44,11 +44,12 @@ class World extends Component {
           <div className="block-container">
             <div className="container-row">
               {stacked.map((column, columnIndex) =>
-                <div className="container-column">
+                <div className="container-column" key={'column'+columnIndex}>
                   {column.map((block, rowIndex) =>
                     <Block
+                      key={block+rowIndex}
                       color={block}
-                      onClick={rowIndex === column.length-1 ? () => popColumn(rowIndex) : null}
+                      onClick={rowIndex === column.length-1 ? () => popColumn(columnIndex) : null}
                     />
                   )}
                   {column.length < height && <SelectorBlock onClick={color => pushColumn(columnIndex, color)}/>}
