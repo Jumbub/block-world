@@ -17,7 +17,11 @@ class Arrow extends Component {
     const { onClick } = this.props
 
     return (
-      <img src={ArrowImage} class={onClick !== null ? 'arrow-disabled' : 'arrow-hoverable'} />
+      <img
+        src={ArrowImage}
+        class={onClick !== null ? 'arrow-disabled' : 'arrow-hoverable'}
+        alt="arrow"
+      />
     )
   }
 }

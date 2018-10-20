@@ -64,15 +64,21 @@ class SetupWorld extends Component {
   worldFacts(hooked, stacked) {
     let facts = []
 
-    facts.push({
-      hooked: hooked
-    })
+    if (hooked !== null) {
+      facts.push({
+        hooked: hooked
+      })
+    } else {
+      facts.push({
+        nothingHooked: true
+      })
+    }
 
     stacked.forEach((row, columnIndex) => {
       row.forEach((block, rowIndex) => {
         if (rowIndex === 0) {
           facts.push({
-            onTable: block
+            onPlatform: block
           })
         }
         if (rowIndex === row.length-1) {
@@ -81,12 +87,13 @@ class SetupWorld extends Component {
           })
         } else {
           facts.push({
-            blockAbove: row[rowIndex+1]
+            block: row[rowIndex],
+            blockAbove: row[rowIndex+1],
           })
         }
       })
       if (row.length === 0) {
-        facts.push({empty: columnIndex})
+        facts.push({platformSpace: true})
       }
     })
 
@@ -100,15 +107,13 @@ class SetupWorld extends Component {
    */
   push(column, color) {
     if (column === -1) {
-      this.state.hooked = color
-      this.updateWorld({
-        hooked: color
-      })
+      let newState = this.state
+      newState.hooked = color
+      this.updateWorld(newState)
     } else {
-      this.state.stacked[column].push(color)
-      this.updateWorld({
-        stacked: this.state.stacked
-      })
+      let newState = this.state
+      newState.stacked[column].push(color)
+      this.updateWorld(newState)
     }
   }
 
@@ -118,15 +123,13 @@ class SetupWorld extends Component {
    */
   pop(column) {
     if (column === -1) {
-      this.state.hooked = null
-      this.updateWorld({
-        hooked: null
-      })
+      let newState = this.state
+      newState.hooked = null
+      this.updateWorld(newState)
     } else {
-      this.state.stacked[column].pop()
-      this.updateWorld({
-        stacked: this.state.stacked
-      })
+      let newState = this.state
+      newState.stacked[column].pop()
+      this.updateWorld(newState)
     }
   }
 
