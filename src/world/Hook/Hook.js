@@ -19,9 +19,7 @@ class Hook extends Component {
     return (
       <div className="hook-container">
         <img src={HookImage} alt="world hook" className="block hook"/>
-        <div className="block-hooked">
-          {children}
-        </div>
+        {children}
       </div>
     )
   }

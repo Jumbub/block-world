@@ -3,15 +3,18 @@ import PropTypes from 'prop-types'
 import BlockImage from './block.png'
 import './block.css'
 
+const BLOCK_COLORS = ['red', 'green', 'blue']
+
 class Block extends Component {
+
   static propTypes = {
-    color: PropTypes.string,
+    color: PropTypes.oneOf(BLOCK_COLORS),
     onClick: PropTypes.func
   }
 
   static defaultProps = {
     color: 'original',
-    onClick: () => {}
+    onClick: null
   }
 
   render() {
@@ -20,7 +23,7 @@ class Block extends Component {
     return (
       <img
         src={BlockImage}
-        className={'block block-anim block-' + color}
+        className={'block block-' + color + (onClick ? ' block-hoverable' : '')}
         alt={color + ' block'}
         onClick={onClick}
       />
@@ -29,3 +32,4 @@ class Block extends Component {
 }
 
 export default Block
+export { BLOCK_COLORS }

@@ -6,7 +6,7 @@
   transition: 0.3s;
 }
 
-.block-anim:hover {
+.block-hoverable:hover {
   cursor: pointer;
   margin-top: -28px;
   margin-bottom: -4px;

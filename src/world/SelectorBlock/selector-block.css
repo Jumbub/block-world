@@ -3,19 +3,15 @@
   max-width: 64px;
   opacity: 0.2;
   filter: saturate(0);
+  transition: 0.5s;
 }
 
   .selector-block:hover {
-    transition: 0.5s;
     filter: saturate(1);
     opacity: 1;
   }
 
   .selector-block .block {
     width: 33.33%;
-    opacity: 0.5;
-  }
-
-  .selector-block .block-anim:hover {
     opacity: 0.5;
   }

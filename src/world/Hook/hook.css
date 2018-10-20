@@ -1,13 +1,8 @@
 .hook-container {
   display: flex;
   flex-direction: column;
-  min-height: 96px;
 }
 
   .hook-container .hook {
     z-index: 1;
-  }
-
-  .hook-container .block-hooked {
-    transition: 0.3s;
   }

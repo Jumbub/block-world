@@ -7,9 +7,9 @@ export default [
   },
   {
     component: Block,
-    name: 'on click action',
+    name: 'has click action',
     props: {
-      onClick: () => alert('clicked!')
+      onClick: () => alert('click!')
     }
   },
   {
