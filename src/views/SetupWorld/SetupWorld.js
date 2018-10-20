@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Heading } from 'he-react-ui'
 
 import './setup-world.css'
 import World from '../../world/World'
@@ -46,7 +45,7 @@ class SetupWorld extends Component {
 
   addBlock(col, color = 'red') {
     let world = this.props.world
-    let lastBlock = world.length > 0 && world.reduce((cur, block) => block.key > cur && block.key || cur)
+    // let lastBlock = world.length > 0 && world.reduce((cur, block) => block.key > cur && block.key || cur)
     const key = LAST_KEY
 
     let above = world.find(block => block.column === col && block.clear)

@@ -24,18 +24,6 @@
   filter: hue-rotate(170deg);
 }
 
-.block-pink {
-  filter: hue-rotate(290deg);
-}
-
-.block-teal {
-  filter: hue-rotate(140deg);
-}
-
-.block-purple {
-  filter: hue-rotate(220deg);
-}
-
 .block-original {
-  /* No filters */
+  filter: hue-rotate(0deg);
 }

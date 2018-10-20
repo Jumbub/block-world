@@ -42,7 +42,7 @@ class World extends Component {
         <Hook>
           {hooked
             ? <Block color={hooked.color} key={hooked.key} onClick={() => removeBlock(hooked.key)} />
-            : <SelectorBlock onClick={() => addBlock(null)} onClick={color => addBlock(null, color)} />
+            : <SelectorBlock onClick={color => addBlock(null, color)} />
           }
         </Hook>
         <div>

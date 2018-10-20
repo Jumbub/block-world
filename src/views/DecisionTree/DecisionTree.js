@@ -36,7 +36,7 @@ class DecisionTree extends Component {
     // Blocks on table
     let colors = []
     world.forEach(block => {
-      if (colors[block.color] == undefined) {
+      if (colors[block.color] === undefined) {
         colors[block.color] = 1
       } else {
         colors[block.color] += 1
@@ -44,7 +44,7 @@ class DecisionTree extends Component {
     })
     colors.forEach((count, color) => {
       const colorCap = color.charAt(0).toUpperCase() + color.substr(1)
-      labels.push({name: colorCap + ' block' + count === 1 ? 's' : '' + ' on table'})
+      labels.push({name: colorCap + ' block' + count === 1 ? 's' : ' on table'})
     })
 
     // No blocks above
@@ -59,17 +59,6 @@ class DecisionTree extends Component {
 
   isInvalidWorld(world) {
     // Hack to prevent multiple blocks with same colors
-    let colors = []
-    const duplicate = world.find(block => {
-      if (colors[block.color]) {
-        return true
-      } else {
-        colors[block.color] = true
-      }
-    })
-    if (duplicate) {
-      return 'ILLEGAL STATE (must have individual colors)'
-    }
 
     // Determine if matching number of blocks for each color
 

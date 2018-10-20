@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import SetupWorld from './SetupWorld'
 
 class SetupWorldWrapper extends Component {

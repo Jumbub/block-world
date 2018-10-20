@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Heading } from 'he-react-ui'
 
 import './module.css'
 
@@ -18,7 +17,7 @@ class Module extends Component {
         <div className="module-items">
           {title &&
             <div className="module-title">
-              <Heading h1>{title}</Heading>
+              {title}
             </div>
           }
           {children &&

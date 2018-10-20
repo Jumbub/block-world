@@ -7,9 +7,9 @@ export default [
   },
   {
     component: Block,
-    name: 'delete action',
+    name: 'on click action',
     props: {
-      onDelete: () => alert('delete action!')
+      onClick: () => alert('clicked!')
     }
   },
   {
@@ -32,26 +32,5 @@ export default [
     props: {
       color: 'green'
     }
-  },
-  {
-    component: Block,
-    name: 'purple',
-    props: {
-      color: 'purple'
-    }
-  },
-  {
-    component: Block,
-    name: 'teal',
-    props: {
-      color: 'teal'
-    }
-  },
-  {
-    component: Block,
-    name: 'pink',
-    props: {
-      color: 'pink'
-    }
-  },
+  }
 ]

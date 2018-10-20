@@ -1,23 +1,29 @@
 {
-  "name": "block-world-ai",
+  "name": "block-world",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "he-react-ui": "^0.1.53",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4",
-    "react-tree-graph": "^3.1.1"
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-scripts": "2.0.5",
+    "react-tree-graph": "^3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "cosmos": "cosmos",
-    "cosmos:export": "cosmos-export"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "devDependencies": {
-    "react-cosmos": "^4.5.0"
+    "react-cosmos": "^4.6.4"
   }
 }
