@@ -46,6 +46,7 @@ class SetupWorld extends Component {
 
   /**
    * Update the higher components with new world facts
+   * @param      {object}  newState  The new state
    */
   updateWorld(newState) {
     const newFacts = this.worldFacts(this.state.hooked, this.state.stacked)

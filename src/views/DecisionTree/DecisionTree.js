@@ -6,16 +6,7 @@ import TreeGraph from '../../interface/TreeGraph'
 
 class DecisionTree extends Component {
   static propTypes = {
-    world: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.number,
-        color: PropTypes.string,
-        hooked: PropTypes.boolean,
-        clear: PropTypes.boolean,
-        above: PropTypes.number,
-        column: PropTypes.number
-      })
-    )
+    decisions: PropTypes.any
   }
 
   static defaultProps = {
@@ -82,11 +73,9 @@ class DecisionTree extends Component {
     const invalid = this.isInvalidWorld(world)
 
     return (
-      <Module title="Decision tree view">
-        {invalid
-          ? invalid
-          : <TreeGraph tree={this.generateTree(world)} /> }
-      </Module>
+      invalid
+        ? invalid
+        : <TreeGraph tree={this.generateTree(world)} />
     )
   }
 }

@@ -4,6 +4,7 @@
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   border-radius: 5px;
   font-family: 'Roboto', sans-serif;
+  margin: 8px;
 }
 
   .module-items {
@@ -12,11 +13,13 @@
     align-items: center;
   }
 
-    .module .module-items .module-title h1 {
-      margin: 16px 0 0 0;
+    .module .module-items .module-title {
+      font-size: 24px;
+      margin-top: 16px;
     }
 
     .module .module-items .module-content {
+      font-size: 16px;
       overflow: hidden;
       margin: 16px;
       padding: 16px;

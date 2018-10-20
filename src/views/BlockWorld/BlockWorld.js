@@ -1,33 +1,46 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
+import './block-world.css'
 import DecisionTree from '../DecisionTree'
 import SetupWorld from '../SetupWorld'
+import Module from '../../interface/Module'
+import Arrow from '../../interface/Arrow'
 
 class BlockWorld extends Component {
-  state = {
-    initialWorld: [],
-    targetWorld: [],
+
+  constructor() {
+    super()
+
+    this.state = {
+      startFacts: [],
+      targetFacts: [],
+      decisions: []
+    }
   }
 
   render() {
-    const { initialWorld, targetWorld } = this.state
+    const { startFacts, targetFacts, decisions } = this.state
 
     return (
-      <Fragment>
-        <DecisionTree
-          initialWorld={initialWorld}
-        />
-        <SetupWorld
-          title="Initial world"
-          updateWorld={newWorld => this.setState({initialWorld: newWorld})}
-          world={initialWorld}
-        />
-        <SetupWorld
-          title="Target world"
-          updateWorld={newWorld => this.setState({targetWorld: newWorld})}
-          world={targetWorld}
-        />
-      </Fragment>
+      <div className="block-world">
+        <Module title="Start World">
+          <SetupWorld
+            updateWorld={facts => this.setState({startFacts: facts})}
+            world={startFacts}
+          />
+        </Module>
+        <Module title="Target World">
+          <SetupWorld
+            updateWorld={newWorld => this.setState({targetFacts: newWorld})}
+            world={targetFacts}
+          />
+        </Module>
+        <Module title="Decision Tree">
+          <DecisionTree
+            decisions={this.decisions}
+          />
+        </Module>
+      </div>
     )
   }
 }
