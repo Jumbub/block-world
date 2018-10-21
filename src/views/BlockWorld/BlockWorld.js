@@ -10,35 +10,47 @@ class BlockWorld extends Component {
     super()
 
     this.state = {
-      startFacts: [],
-      targetFacts: [],
-      decisions: {name:''}
+      startFacts: null,
+      targetFacts: null,
+      decisions: {name:''},
+      steps: 'None'
     }
 
     this.go = this.go.bind(this)
   }
 
   render() {
-    const { startFacts, targetFacts, decisions } = this.state
+    const { startFacts, targetFacts, decisions, steps } = this.state
 
     return (
       <div className="block-world">
         <Module title="Start World">
           <SetupWorld
             onUpdate={facts => this.setState({startFacts: facts})}
-            world={startFacts}
           />
-          {startFacts.map(fact => <p>{JSON.stringify(fact)}</p>)}
+          <p>World Facts:</p>
+          {startFacts && startFacts.toArray().map((fact, i) =>
+            <p key={fact + i}>
+              {fact}
+            </p>
+          )}
         </Module>
         <Module title="Target World">
           <SetupWorld
-            onUpdate={newWorld => this.setState({targetFacts: newWorld})}
-            world={targetFacts}
+            onUpdate={facts => this.setState({targetFacts: facts})}
           />
-          {targetFacts.map(fact => <p>{JSON.stringify(fact)}</p>)}
+          <p>World Facts:</p>
+          {targetFacts && targetFacts.toArray().map(fact =>
+            <p key={fact}>
+              {fact}
+            </p>
+          )}
         </Module>
         <button onClick={this.go} className="module" style={{fontSize: '24px'}}>Go</button>
         <Module title="Decision Tree">
+          <p>
+            Steps to solve: {steps}
+          </p>
           <TreeGraph
             tree={decisions}
           />
@@ -51,41 +63,20 @@ class BlockWorld extends Component {
    * Do something amazing, please
    */
   go() {
+    const { startFacts } = this.state
+
+    // This line will call the BlockSolver class with the facts
+    const steps = 'None'
+
     const tree = {
       name: '',
-      children: this.formattedFacts(this.state.startFacts)
+      children: startFacts ? startFacts.toArray().map(fact => {return {name: fact}}) : []
     }
 
     this.setState({
-      decisions: tree
+      decisions: tree,
+      steps: steps
     })
-  }
-
-  formattedFacts(facts) {
-    let hadAnEmpty = false
-    return facts.map(fact => {
-      if (fact.platformSpace) {
-        if (hadAnEmpty) {
-          return undefined
-        } else {
-          hadAnEmpty = true
-          return {name:'space()'}
-        }
-      } else if (fact.onPlatform) {
-        return {name: 'onPlatform(' + fact.onPlatform + ')'}
-      } else if (fact.nothingAbove) {
-        return {name: 'clear(' + fact.nothingAbove + ')'}
-      } else if (fact.blockAbove) {
-        return {name: 'above(' + fact.blockAbove + ',' + fact.block + ')'}
-      } else if (fact.hooked) {
-        return {name: 'hooked(' + fact.hooked + ')'}
-      } else if (fact.nothingHooked) {
-        return {name: 'nothingHooked()'}
-      } else {
-        window.console.error('Invalid fact:', fact)
-        return {name: 'ERROR'}
-      }
-    }).filter(fact => fact !== undefined)
   }
 }
 

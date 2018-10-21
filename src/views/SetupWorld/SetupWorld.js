@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import WorldFacts from '../../logic/WorldFacts'
 import World from '../../world/World'
 
 class SetupWorld extends Component {
@@ -49,55 +50,11 @@ class SetupWorld extends Component {
    * @param      {object}  newState  The new state
    */
   updateWorld(newState) {
-    const newFacts = this.worldFacts(this.state.hooked, this.state.stacked)
+    const newFacts = new WorldFacts(this.state.hooked, this.state.stacked)
     this.setState(
       newState,
       () => this.props.onUpdate(newFacts)
     )
-  }
-
-  /**
-   * Generate the world facts given world state
-   * @param      {string}  hooked   The hooked block
-   * @param      {array}   stacked  The 2D array of hooked blocks
-   */
-  worldFacts(hooked, stacked) {
-    let facts = []
-
-    if (hooked !== null) {
-      facts.push({
-        hooked: hooked
-      })
-    } else {
-      facts.push({
-        nothingHooked: true
-      })
-    }
-
-    stacked.forEach((row, columnIndex) => {
-      row.forEach((block, rowIndex) => {
-        if (rowIndex === 0) {
-          facts.push({
-            onPlatform: block
-          })
-        }
-        if (rowIndex === row.length-1) {
-          facts.push({
-            nothingAbove: block
-          })
-        } else {
-          facts.push({
-            block: row[rowIndex],
-            blockAbove: row[rowIndex+1],
-          })
-        }
-      })
-      if (row.length === 0) {
-        facts.push({platformSpace: true})
-      }
-    })
-
-    return facts
   }
 
   /**
