@@ -242,9 +242,9 @@ class WorldFacts {
     switch(fact[0]) {
       case BLOCK_ABOVE:
         return 5
-      case NOTHING_ABOVE:
-        return 4
       case ON_PLATFORM:
+        return 4
+      case NOTHING_ABOVE:
         return 3
       case NOTHING_HOOKED:
         return 2

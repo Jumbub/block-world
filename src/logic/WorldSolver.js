@@ -7,8 +7,8 @@ const PUT_ON_PLATFORM = 'put on table'
 const PICK_UP = 'pick up'
 
 // TODO: remove after confident it wont make infinite checks
-const MAX_CHECKS = 1
-const MAX_DEPTH = 5
+const MAX_CHECKS = 5
+const MAX_DEPTH = 10
 
 /**
  * Class for storing block facts
