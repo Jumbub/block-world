@@ -2,13 +2,13 @@ import WorldFacts, { HOOKED, NOTHING_HOOKED, ON_PLATFORM, NOTHING_ABOVE, BLOCK_A
 
 // Action labels
 // TODO: Determine if these constants are necessary (likely not)
-const PUT = 'put'
-const PUT_ON_TABLE = 'put on table'
+const PUT_ON_BLOCK = 'put'
+const PUT_ON_PLATFORM = 'put on table'
 const PICK_UP = 'pick up'
 
 // TODO: remove after confident it wont make infinite checks
-let numChecks = 0
-const MAX_CHECKS = 2
+const MAX_CHECKS = 1
+const MAX_DEPTH = 5
 
 /**
  * Class for storing block facts
@@ -25,7 +25,11 @@ class WorldSolver {
    */
   static solve(current, target, steps=[], depth=0) {
     console.log('===========================================', depth)
-    if (depth === 3) return steps
+    let numChecks = 0
+    if (depth >= MAX_DEPTH) {
+      console.error('!!! Unexpected level of recursion!')
+      return steps
+    }
 
     console.log('current:', current.toArray())
     console.log('target:', target.toArray())
@@ -43,28 +47,88 @@ class WorldSolver {
 
           // Find the action which will make this fact true
           switch(fact[0]) {
-            case ON_PLATFORM:
-              console.log('@@@ ON_PLATFORM(x) -> PUT_ON_TABLE(x)')
 
-              // Find steps to be able to perform this fix
+            case ON_PLATFORM:
+              console.log('@@@ CHECKING: not ON_PLATFORM(x) -> so PUT_ON_PLATFORM(x)', 'x='+fact[1])
               steps = this.solve(
                 current,
                 WorldFacts.reqForPutOnPlatform(fact[1]),
                 steps,
                 depth + 1
               )
-
-              console.log('@@@ RUNNING:::: ON_PLATFORM(x) -> PUT_ON_TABLE(x)')
-              // Apply this fix
+              console.log('@@@ RUNNING: not ON_PLATFORM(x) -> so PUT_ON_PLATFORM(x)', 'x='+fact[1])
               current.putOnPlatform(fact[1])
-
-              // Save the steps taken
-              steps.push([PUT, fact[1]])
+              steps.push([PUT_ON_PLATFORM, fact[1]])
               break
+
             case HOOKED:
-              console.log('@@@ HOOKED(x) -> PICK_UP(x)')
+              console.log('@@@ CHECKING: not HOOKED(x) -> so PICK_UP(x)', 'x='+fact[1])
+              steps = this.solve(
+                current,
+                WorldFacts.reqForPickUp(fact[1]),
+                steps,
+                depth + 1
+              )
+              console.log('@@@ RUNNING: not HOOKED(x) -> so PICK_UP(x)', 'x='+fact[1])
+              current.pickUp(fact[1])
               steps.push([PICK_UP, fact[1]])
               break
+
+            case NOTHING_HOOKED:
+              // TODO: remove duplicate with ON_PLATFORM(x)
+              const hooked = current.findHookedBlock()
+              console.log('@@@ CHECKING: not NOTHING_HOOKED() -> so PUT_ON_PLATFORM( findHooked() )', 'findHooked()='+hooked)
+              steps = this.solve(
+                current,
+                WorldFacts.reqForPutOnPlatform(hooked),
+                steps,
+                depth + 1
+              )
+              console.log('@@@ RUNNING: not NOTHING_HOOKED() -> so PUT_ON_PLATFORM( findHooked() )', 'findHooked()='+hooked)
+              current.putOnPlatform(hooked)
+              steps.push([PUT_ON_PLATFORM, hooked])
+              break
+
+            case BLOCK_ABOVE:
+              console.log('@@@ CHECKING: not BLOCK_ABOVE(x, y) -> so PUT_ON_BLOCK(x, y)', 'x='+fact[1], 'y='+fact[2])
+              steps = this.solve(
+                current,
+                WorldFacts.reqForPutOnBlock(fact[1], fact[2]),
+                steps,
+                depth + 1
+              )
+              console.log('@@@ RUNNING: not BLOCK_ABOVE(x, y) -> so PUT_ON_BLOCK(x, y)', 'x='+fact[1], 'y='+fact[2])
+              current.putOnBlock(fact[1], fact[2])
+              steps.push([PUT_ON_BLOCK, fact[1], fact[2]])
+              break
+
+            case NOTHING_ABOVE:
+              const blockAbove = current.findBlockAbove(fact[1])
+              console.log('@@@ CHECKING: not NOTHING_ABOVE(x) -> so PICK_UP( findAbove(x) )', 'x='+fact[1], 'findAbove(x)='+blockAbove)
+              steps = this.solve(
+                current,
+                WorldFacts.reqForPickUp(blockAbove),
+                steps,
+                depth + 1
+              )
+              console.log('@@@ RUNNING: not NOTHING_ABOVE(x) -> so PICK_UP( findAbove(x) )', 'x='+fact[1], 'findAbove(x)='+blockAbove)
+              current.pickUp(blockAbove)
+              steps.push([PICK_UP, blockAbove])
+              break
+
+            case ON_PLATFORM:
+              console.log('@@@ CHECKING: not ON_PLATFORM(x) -> so PUT_ON_PLATFORM(x)', 'x='+fact[1])
+              steps = this.solve(
+                current,
+                WorldFacts.reqForPutOnPlatform(fact[1]),
+                steps,
+                depth + 1
+              )
+              console.log('@@@ RUNNING: not ON_PLATFORM(x) -> so PUT_ON_PLATFORM(x)', 'x='+fact[1])
+              current.putOnPlatform(fact[1])
+              steps.push([PUT_ON_PLATFORM, fact[1]])
+              break
+
             default:
               console.error('@@@ This fact type is not fixable:', fact[0])
           }

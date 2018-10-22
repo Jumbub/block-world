@@ -55,7 +55,7 @@ class WorldFacts {
    * @param      {string}      block   The block
    * @return     {WorldFacts}  The required facts
    */
-  static reqForPickup(block) {
+  static reqForPickUp(block) {
     return new WorldFacts([
       [NOTHING_ABOVE, block],
       [NOTHING_HOOKED]
@@ -88,10 +88,43 @@ class WorldFacts {
   }
 
   /**
+   * Modify facts for the action of picking up a block
+   * @param      {string}  block   The block
+   */
+  pickUp(block) {
+    console.log('^^^^^ pickUp', this.toArray())
+    const nothingHookedIndex = this.facts.findIndex(fact => fact[0] === NOTHING_HOOKED)
+    this.facts.splice(nothingHookedIndex, 1)
+    const nothingAboveIndex = this.facts.findIndex(fact => fact[0] === NOTHING_ABOVE && fact[1] === block)
+    this.facts.splice(nothingAboveIndex, 1)
+
+    this.facts.push([HOOKED, block])
+
+    if (this.facts.find(fact => fact[0] === ON_PLATFORM && fact[1] === block)) {
+      // On platform
+      const onPlatformIndex = this.facts.findIndex(fact => fact[0] === ON_PLATFORM && fact[1] === block)
+      this.facts.splice(onPlatformIndex, 1)
+
+      this.facts.push([SPACE_ON_PLATFORM])
+    } else {
+      // On another block
+      const blockBelow = this.findBlockBelow(block)
+
+      const blockAboveIndex = this.facts.findIndex(fact => fact[0] === BLOCK_ABOVE && fact[2] === block)
+      this.facts.splice(blockAboveIndex, 1)
+
+      this.facts.push([NOTHING_ABOVE, blockBelow])
+    }
+
+    console.log('^^^^^', this.toArray())
+  }
+
+  /**
    * Modify facts for the action of putting a block on the platform
    * @param      {string}  block   The block
    */
   putOnPlatform(block) {
+    console.log('^^^^^ putOnPlatform', this.toArray())
     const hookedIndex = this.facts.findIndex(fact => fact[0] === HOOKED && fact[1] === block)
     this.facts.splice(hookedIndex, 1)
     const spaceIndex = this.facts.findIndex(fact => fact[0] === SPACE_ON_PLATFORM)
@@ -100,6 +133,85 @@ class WorldFacts {
     this.facts.push([NOTHING_HOOKED])
     this.facts.push([ON_PLATFORM, block])
     this.facts.push([NOTHING_ABOVE, block])
+    console.log('^^^^^', this.toArray())
+  }
+
+  /**
+   * Modify facts for the action of putting a block on top of another
+   * @param      {string}  bottomBlock  The block below
+   * @param      {string}  topBlock     The block above
+   */
+  putOnBlock(bottomBlock, topBlock) {
+    console.log('^^^^^ putOnBlock', this.toArray())
+    const hookedIndex = this.facts.findIndex(fact => fact[0] === HOOKED && fact[1] === topBlock)
+    this.facts.splice(hookedIndex, 1)
+    const nothingAboveIndex = this.facts.findIndex(fact => fact[0] === NOTHING_ABOVE && fact[1] === bottomBlock)
+    this.facts.splice(nothingAboveIndex, 1)
+
+    this.facts.push([NOTHING_HOOKED])
+    this.facts.push([BLOCK_ABOVE, bottomBlock, topBlock])
+    this.facts.push([NOTHING_ABOVE, topBlock])
+    console.log('^^^^^', this.toArray())
+  }
+
+  /**
+   * Find the block which is hooked
+   * @return     {string}  The hooked block
+   */
+  findHookedBlock() {
+    const hooked = this.facts.find(
+      fact => fact[0] === HOOKED
+    )
+    // TODO: replace after confident
+    if (!hooked || hooked.length < 2) {
+      console.error('findBlockHooked failed! [1]', hooked, this.facts)
+      return ''
+    }
+    return hooked[1]
+  }
+
+  /**
+   * Find the block above this block
+   * @param      {string}  block   The block
+   * @return     {string}  The block above
+   */
+  findBlockAbove(block) {
+    // TODO: replace after confident
+    if (!block) {
+      console.error('findBlockAbove failed! [1]', block)
+      return ''
+    }
+    const above = this.facts.find(
+      fact => fact[0] === BLOCK_ABOVE && fact[1] === block
+    )
+    // TODO: replace after confident
+    if (!above || above.length < 3) {
+      console.error('findBlockAbove failed! [2]', block, this.facts)
+      return ''
+    }
+    return above[2]
+  }
+
+  /**
+   * Find the block below this block
+   * @param      {string}  block   The block
+   * @return     {string}  The block below
+   */
+  findBlockBelow(block) {
+    // TODO: replace after confident
+    if (!block) {
+      console.error('findBlockBelow failed! [1]', block)
+      return ''
+    }
+    const below = this.facts.find(
+      fact => fact[0] === BLOCK_ABOVE && fact[2] === block
+    )
+    // TODO: replace after confident
+    if (!below || below.length < 3) {
+      console.error('findBlockBelow failed! [2]', block, this.facts)
+      return ''
+    }
+    return below[1]
   }
 
   /**
@@ -107,7 +219,6 @@ class WorldFacts {
    * @param      {array}  fact    The fact
    */
   hasFact(fact) {
-    console.log(fact)
     return this.facts.find(
       myFact => fact.toString() === myFact.toString()
     )
@@ -122,32 +233,40 @@ class WorldFacts {
   }
 
   /**
+   * Get the fact priority (used for sorting)
+   *
+   * @param      {array}  fact    The fact
+   */
+  static factPriority(fact) {
+    // TODO: fix these priorities and potentially remove code which will never be hit due to the ordering
+    switch(fact[0]) {
+      case BLOCK_ABOVE:
+        return 5
+        break
+      case NOTHING_ABOVE:
+        return 4
+        break
+      case ON_PLATFORM:
+        return 3
+        break
+      case NOTHING_HOOKED:
+        return 2
+        break
+      case HOOKED:
+        return 1
+        break
+      case SPACE_ON_PLATFORM:
+        return 0
+        break
+    }
+  }
+
+  /**
    * Retrieve the facts sorted for optimal steps
    * @return     {array}  The 2D facts array
    */
   getSortedFacts() {
-    return this.facts.sort((a, b) => {
-      // Matches are currently always equal importance
-      if (a[0] === b[0]) {
-        return 0
-
-      // Always first
-      } else if (a[0] === BLOCK_ABOVE) {
-        return -1
-
-      // Always first
-      } else if (a[0] === ON_PLATFORM && b[0] !== BLOCK_ABOVE) {
-        return -1
-
-      // Always last
-      } else if (a[0] === SPACE_ON_PLATFORM) {
-        return 1
-
-      // TODO: Replace this catch all with an error when all cases have been filled
-      } else {
-        return 1
-      }
-    })
+    return this.facts.sort((a, b) => WorldFacts.factPriority(b) - WorldFacts.factPriority(a))
   }
 
   /**
@@ -164,6 +283,14 @@ class WorldFacts {
    */
   toString() {
     return this.toArray().reduce((string, fact) => string + '|' + fact)
+  }
+
+  /**
+   * Creates a new instance of the object with same properties than original.
+   * @return     {WorldFacts}  Copy of this object.
+   */
+  clone() {
+    return new WorldFacts(this.facts.slice())
   }
 }
 

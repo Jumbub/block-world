@@ -14,8 +14,8 @@ class BlockWorld extends Component {
   }
 
   static defaultProps = {
-    width: 2,
-    height: 2
+    width: 4,
+    height: 4
   }
 
   constructor() {
@@ -86,7 +86,7 @@ class BlockWorld extends Component {
     }
 
     // This line will call the WorldSolver class with the facts
-    const steps = WorldSolver.solve(startFacts, targetFacts)
+    const steps = WorldSolver.solve(startFacts.clone(), targetFacts.clone())
       .map(step => step.toString().replace(',', ' '))
       .toString().replace(',', ' ; ')
 
