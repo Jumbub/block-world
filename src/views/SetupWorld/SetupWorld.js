@@ -50,7 +50,7 @@ class SetupWorld extends Component {
    * @param      {object}  newState  The new state
    */
   updateWorld(newState) {
-    const newFacts = new WorldFacts(this.state.hooked, this.state.stacked)
+    const newFacts = WorldFacts.createFromWorld(this.state.hooked, this.state.stacked)
     this.setState(
       newState,
       () => this.props.onUpdate(newFacts)
