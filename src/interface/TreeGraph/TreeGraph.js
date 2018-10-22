@@ -21,9 +21,9 @@ class TreeGraph extends Component {
         <Tree
           data={tree}
           height={400}
-          width={600}
+          width={800}
           svgProps={{
-            className: 'tree'
+            className: 'custom'
           }}
         />
     )

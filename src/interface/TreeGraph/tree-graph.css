@@ -1,25 +1,48 @@
-.tree-graph {
+svg.custom .node circle {
+  fill: #F3F3FF;
+  stroke: #2593B8;
+  stroke-width: 1.5px;
 }
 
-  .tree-graph svg.tree path.link {
-    fill: none;
-    stroke: #2593B8;
-    stroke-width: 1.5px;
-  }
+svg.custom .node text {
+  font-size: 12px;
+  background-color: #444;
+  fill: black;
+  text-shadow: 0 1px 4px white;
+}
 
-  .tree-graph svg.tree .node {
-    cursor: pointer; 
-  }
+svg.custom .red-node circle {
+  fill: green;
+  stroke: #2593B8;
+  stroke-width: 1.5px;
+}
 
-    .tree-graph svg.tree .node circle {
-      fill: #F3F3FF;
-      stroke: #2593B8;
-      stroke-width: 1.5px;
-    }
+svg.custom .red-node text {
+  font-size: 12px;
+  background-color: #444;
+  fill: black;
+  text-shadow: 0 1px 4px white;
+}
 
-    .tree-graph svg.tree .node text {
-      font-size: 13px;
-      background-color: #444;
-      fill: #F4F4F4;
-      text-shadow: 0 1px 4px black;
-    }
+svg.custom .green-node circle {
+  fill: green;
+  stroke: #2593B8;
+  stroke-width: 1.5px;
+}
+
+svg.custom .green-node text {
+  font-size: 12px;
+  background-color: #444;
+  fill: black;
+  text-shadow: 0 1px 4px white;
+}
+
+svg.custom .node {
+  cursor: pointer;
+}
+
+svg.custom path.link {
+  fill: none;
+  stroke: white;
+  stroke-width: 1.5px;
+}

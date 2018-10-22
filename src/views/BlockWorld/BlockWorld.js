@@ -86,14 +86,10 @@ class BlockWorld extends Component {
     }
 
     // This line will call the WorldSolver class with the facts
-    const steps = WorldSolver.solve(startFacts.clone(), targetFacts.clone())
+    let tree = {name:'intial',children:[]}
+    const steps = WorldSolver.solve(startFacts.clone(), targetFacts.clone(), tree)
       .map(step => step.toString().replace(',', ' '))
       .toString().replace(',', ' ; ')
-
-    const tree = {
-      name: '',
-      children: startFacts ? startFacts.toArray().map((fact, i) => {return {name: i+')'+fact}}) : []
-    }
 
     this.setState({
       decisions: tree,

@@ -23,7 +23,7 @@ class WorldSolver {
    * @param      {Array}       depth    The depth of this recursive call
    * @return     {Array}  The steps to achieve the target world
    */
-  static solve(current, target, steps=[], depth=0) {
+  static solve(current, target, tree={name:'intial',children:[]}, steps=[], depth=0) {
     console.log('===========================================', depth)
     let numChecks = 0
     if (depth >= MAX_DEPTH) {
@@ -31,19 +31,21 @@ class WorldSolver {
       return steps
     }
 
-    console.log('current:', current.toArray())
-    console.log('target:', target.toArray())
-
     let allPassed = false
     do {
       const facts = target.getSortedFacts()
-      console.log('sortedFacts:', facts, current.getSortedFacts())
+      console.log('target.getSortedFacts=', facts)
+      console.log('current.getSortedFacts=', current.getSortedFacts())
       allPassed = facts.every(fact => {
-        console.log('---', fact)
+        // Append step to tree
+        let child = {
+          name: '('+numChecks+')' + fact.toString(),
+          children: []
+        }
 
         // If the current world does not contain the fact
         if (!current.hasFact(fact)) {
-          console.log('###', fact)
+          console.log('### !current.hasFact(x)', 'x='+fact)
 
           // Find the action which will make this fact true
           switch(fact[0]) {
@@ -53,6 +55,7 @@ class WorldSolver {
               steps = this.solve(
                 current,
                 WorldFacts.reqForPutOnPlatform(fact[1]),
+                child,
                 steps,
                 depth + 1
               )
@@ -66,6 +69,7 @@ class WorldSolver {
               steps = this.solve(
                 current,
                 WorldFacts.reqForPickUp(fact[1]),
+                child,
                 steps,
                 depth + 1
               )
@@ -81,6 +85,7 @@ class WorldSolver {
               steps = this.solve(
                 current,
                 WorldFacts.reqForPutOnPlatform(hooked),
+                child,
                 steps,
                 depth + 1
               )
@@ -94,6 +99,7 @@ class WorldSolver {
               steps = this.solve(
                 current,
                 WorldFacts.reqForPutOnBlock(fact[1], fact[2]),
+                child,
                 steps,
                 depth + 1
               )
@@ -108,6 +114,7 @@ class WorldSolver {
               steps = this.solve(
                 current,
                 WorldFacts.reqForPickUp(blockAbove),
+                child,
                 steps,
                 depth + 1
               )
@@ -121,6 +128,7 @@ class WorldSolver {
               steps = this.solve(
                 current,
                 WorldFacts.reqForPutOnPlatform(fact[1]),
+                child,
                 steps,
                 depth + 1
               )
@@ -133,9 +141,17 @@ class WorldSolver {
               console.error('@@@ This fact type is not fixable:', fact[0])
           }
 
+
+          child.gProps = {className: 'red-node'}
+          console.log(child, tree)
+          tree.children.push(child)
           return false // Run through facts again because the current facts were modified
         }
 
+        child.gProps = {className: 'green-node'}
+        console.log(child)
+        console.log(tree)
+        tree.children.push(child)
         return true
       })
 
