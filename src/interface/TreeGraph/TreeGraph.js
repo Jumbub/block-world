@@ -1,32 +1,68 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import Tree from 'react-tree-graph'
-import 'react-tree-graph/dist/style.css'
+import Tree from 'react-d3-tree';
 
-import './tree-graph.css'
-
-class TreeGraph extends Component {
+class TreeGraph extends PureComponent {
   static propTypes = {
-    tree: PropTypes.object
+    tree: PropTypes.array.isRequired
   }
 
   static defaultProps = {
-    tree: {}
+    tree: [{}]
+  }
+
+  state = {}
+
+  componentDidMount() {
+    const dimensions = this.treeContainer.getBoundingClientRect();
+    this.setState({
+      translate: {
+        x: 20,
+        y: dimensions.height / 2
+      }
+    });
   }
 
   render() {
-    const { tree } = this.props
-
     return (
-        <Tree
-          data={tree}
-          height={400}
-          width={800}
-          svgProps={{
-            className: 'custom'
+      <div ref={tc => (this.treeContainer = tc)} style={{
+        width: '800px',
+        height: '400px',
+        backgroundColor: 'rgb(200, 200, 200)',
+        fontFamily: 'Roboto, sans-serif'
+      }}>
+        <Tree 
+          data={this.props.tree} 
+          translate={this.state.translate} 
+          orientation={'horizontal'}
+          nodeSize={{x: 200, y: 50}}
+          nodeSvgShape={{
+            shape: 'rect',
+            shapeProps: {
+              width: 5,
+              height: 5,
+              x: -2,
+              y: -2,
+            }
+          }}
+          styles={{
+            links: {stroke: 'white', strokeWidth: 2 },
+            nodes: {
+              node: {
+                circle: {stroke: 'black', strokeWidth: 1 },
+                name: {stroke: 'black', strokeWidth: 1 },
+                attributes: {stroke: 'black', strokeWidth: 1 },
+              },
+              leafNode: {
+                circle: {stroke: 'black', strokeWidth: 1 },
+                name: {stroke: 'black', strokeWidth: 1 },
+                attributes: {stroke: 'black', strokeWidth: 1 },
+              },
+            },
           }}
         />
-    )
+      </div>
+    );
   }
 }
 

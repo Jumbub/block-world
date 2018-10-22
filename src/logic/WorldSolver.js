@@ -1,4 +1,4 @@
-import WorldFacts, { HOOKED, NOTHING_HOOKED, ON_PLATFORM, NOTHING_ABOVE, BLOCK_ABOVE, SPACE_ON_PLATFORM } from './WorldFacts'
+import WorldFacts, { HOOKED, NOTHING_HOOKED, ON_PLATFORM, NOTHING_ABOVE, BLOCK_ABOVE } from './WorldFacts'
 
 // Action labels
 // TODO: Determine if these constants are necessary (likely not)
@@ -39,7 +39,7 @@ class WorldSolver {
       allPassed = facts.every(fact => {
         // Append step to tree
         let child = {
-          name: '('+numChecks+')' + fact.toString(),
+          name: '('+numChecks+') ' + fact.toString(),
           children: []
         }
 
@@ -123,34 +123,25 @@ class WorldSolver {
               steps.push([PICK_UP, blockAbove])
               break
 
-            case ON_PLATFORM:
-              console.log('@@@ CHECKING: not ON_PLATFORM(x) -> so PUT_ON_PLATFORM(x)', 'x='+fact[1])
-              steps = this.solve(
-                current,
-                WorldFacts.reqForPutOnPlatform(fact[1]),
-                child,
-                steps,
-                depth + 1
-              )
-              console.log('@@@ RUNNING: not ON_PLATFORM(x) -> so PUT_ON_PLATFORM(x)', 'x='+fact[1])
-              current.putOnPlatform(fact[1])
-              steps.push([PUT_ON_PLATFORM, fact[1]])
-              break
-
             default:
-              console.error('@@@ This fact type is not fixable:', fact[0])
+              // TODO: remove unecessary functions from above and then improve priorities
+              console.error('@@@ This fact type still be fixed by something else:', fact[0])
           }
 
-
-          child.gProps = {className: 'red-node'}
-          console.log(child, tree)
-          tree.children.push(child)
+          // Append action and further checks to tree
+          tree.children.push({
+            name: child.name,
+            children: [
+              {
+                name: steps[steps.length-1].toString(),
+                children: child.children
+              }
+            ]
+          })
           return false // Run through facts again because the current facts were modified
         }
 
-        child.gProps = {className: 'green-node'}
-        console.log(child)
-        console.log(tree)
+        // Append check to tree
         tree.children.push(child)
         return true
       })

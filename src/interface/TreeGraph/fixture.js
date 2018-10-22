@@ -9,14 +9,14 @@ export default [
     component: TreeGraph,
     name: 'example',
     props: {
-      tree: {
+      tree: [{
         name: 'Parent',
         children: [{
           name: 'Child One'
         }, {
           name: 'Child Two'
         }]
-      }
+      }]
     }
   }
 ]

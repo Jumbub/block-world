@@ -24,7 +24,7 @@ class BlockWorld extends Component {
     this.state = {
       startFacts: null,
       targetFacts: null,
-      decisions: {name:''},
+      decisions: [{name:''}],
       steps: 'None'
     }
 
@@ -32,7 +32,7 @@ class BlockWorld extends Component {
   }
 
   render() {
-    const { startFacts, targetFacts, decisions, steps } = this.state
+    const { decisions, steps } = this.state
 
     return (
       <div className="block-world">
@@ -42,12 +42,6 @@ class BlockWorld extends Component {
             width={this.props.width}
             height={this.props.height}
           />
-          <p>World Facts:</p>
-          {startFacts && startFacts.getSortedFacts().map((fact, i) =>
-            <p key={i+fact.toString()}>
-              {fact.toString()}
-            </p>
-          )}
         </Module>
         <Module title="Target World">
           <SetupWorld
@@ -55,12 +49,6 @@ class BlockWorld extends Component {
             width={this.props.width}
             height={this.props.height}
           />
-          <p>World Facts:</p>
-          {targetFacts && targetFacts.getSortedFacts().map((fact, i) =>
-            <p key={i+fact.toString()}>
-              {fact.toString()}
-            </p>
-          )}
         </Module>
         <button onClick={this.go} className="module" style={{fontSize: '24px'}}>Go</button>
         <Module title="Decision Tree">
@@ -92,7 +80,7 @@ class BlockWorld extends Component {
       .toString().replace(',', ' ; ')
 
     this.setState({
-      decisions: tree,
+      decisions: [tree],
       steps: steps
     })
   }

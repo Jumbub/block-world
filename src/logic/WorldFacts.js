@@ -242,22 +242,18 @@ class WorldFacts {
     switch(fact[0]) {
       case BLOCK_ABOVE:
         return 5
-        break
       case NOTHING_ABOVE:
         return 4
-        break
       case ON_PLATFORM:
         return 3
-        break
       case NOTHING_HOOKED:
         return 2
-        break
       case HOOKED:
         return 1
-        break
       case SPACE_ON_PLATFORM:
         return 0
-        break
+      default:
+        return -1
     }
   }
 
