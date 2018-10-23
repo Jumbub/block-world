@@ -27,6 +27,7 @@ class WorldFacts {
     let facts = []
     if (hooked !== null) {
       facts.push([HOOKED, hooked])
+      facts.push([NOTHING_ABOVE, hooked])
     } else {
       facts.push([NOTHING_HOOKED])
     }
@@ -95,8 +96,6 @@ class WorldFacts {
     console.log('^^^^^ pickUp', this.toArray())
     const nothingHookedIndex = this.facts.findIndex(fact => fact[0] === NOTHING_HOOKED)
     this.facts.splice(nothingHookedIndex, 1)
-    const nothingAboveIndex = this.facts.findIndex(fact => fact[0] === NOTHING_ABOVE && fact[1] === block)
-    this.facts.splice(nothingAboveIndex, 1)
 
     this.facts.push([HOOKED, block])
 
