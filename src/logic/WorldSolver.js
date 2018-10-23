@@ -1,4 +1,4 @@
-import WorldFacts, { HOOKED, NOTHING_HOOKED, ON_PLATFORM, NOTHING_ABOVE, BLOCK_ABOVE } from './WorldFacts'
+import WorldFacts, { HOOKED, NOTHING_HOOKED, ON_PLATFORM, NOTHING_ABOVE, BLOCK_ABOVE, SPACE_ON_PLATFORM } from './WorldFacts'
 
 // Action labels
 // TODO: Determine if these constants are necessary (likely not)
@@ -123,9 +123,23 @@ class WorldSolver {
               steps.push([PICK_UP, blockAbove])
               break
 
+            case SPACE_ON_PLATFORM:
+              const random = current.findRandomBlock()
+              console.log('@@@ CHECKING: not SPACE_ON_PLATFORM(x) -> so PICK_UP( findRandomBlock() )', 'findRandomBlock()='+random)
+              steps = this.solve(
+                current,
+                WorldFacts.reqForPickUp(random),
+                child,
+                steps,
+                depth + 1
+              )
+              console.log('@@@ RUNNING: not SPACE_ON_PLATFORM(x) -> so PICK_UP( findRandomBlock() )', 'findRandomBlock()='+random)
+              current.pickUp(random)
+              steps.push([PICK_UP, random, '(random choice)'])
+              break
+
             default:
-              // TODO: remove unecessary functions from above and then improve priorities
-              console.error('@@@ This fact type still be fixed by something else:', fact[0])
+              throw 'Invalid fact type! fact[0]='+fact[0]
           }
 
           // Append action and further checks to tree
