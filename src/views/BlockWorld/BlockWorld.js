@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import './block-world.css'
 import SetupWorld from '../SetupWorld'
 import Module from '../../interface/Module'
+import Arrow from '../../interface/Arrow'
 import TreeGraph from '../../interface/TreeGraph'
 import WorldSolver from '../../logic/WorldSolver'
 
@@ -43,6 +44,9 @@ class BlockWorld extends Component {
             height={this.props.height}
           />
         </Module>
+        <Arrow
+          onClick={this.go}
+        />
         <Module title="Target World">
           <SetupWorld
             onUpdate={facts => this.setState({targetFacts: facts})}
@@ -50,7 +54,6 @@ class BlockWorld extends Component {
             height={this.props.height}
           />
         </Module>
-        <button onClick={this.go} className="module" style={{fontSize: '24px'}}>Go</button>
         <Module title="Decision Tree">
           <p>
             Solution: {steps}

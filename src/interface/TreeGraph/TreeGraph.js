@@ -35,6 +35,7 @@ class TreeGraph extends PureComponent {
           data={this.props.tree} 
           translate={this.state.translate} 
           orientation={'horizontal'}
+          collapsible={false}
           nodeSize={{x: 200, y: 50}}
           nodeSvgShape={{
             shape: 'rect',

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import ArrowImage from './arrow.png'
+import './arrow.css'
 
 class Arrow extends Component {
 
@@ -10,7 +11,7 @@ class Arrow extends Component {
   }
 
   static defaultProps = {
-    onClick: null
+    onClick: undefined
   }
 
   render() {
@@ -19,7 +20,8 @@ class Arrow extends Component {
     return (
       <img
         src={ArrowImage}
-        class={onClick !== null ? 'arrow-disabled' : 'arrow-hoverable'}
+        className={'arrow '+(onClick ? 'arrow-hoverable' : 'arrow-disabled')}
+        onClick={onClick}
         alt="arrow"
       />
     )
