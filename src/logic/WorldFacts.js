@@ -164,7 +164,7 @@ class WorldFacts {
     // TODO: replace after confident
     if (!hooked || hooked.length < 2) {
       console.error('findBlockHooked failed! [1]', hooked, this.facts)
-      throw 'findBlockHooked failed! [1] hooked='+hooked
+      throw new Error('findBlockHooked failed! [1] hooked='+hooked)
     }
     return hooked[1]
   }
@@ -186,7 +186,7 @@ class WorldFacts {
         return shuffled[i][1]
       }
     }
-    throw 'Cannot retrieve random block, because there are no blocks!'
+    throw new Error('Cannot retrieve random block, because there are no blocks!')
   }
 
   /**
@@ -198,7 +198,7 @@ class WorldFacts {
     // TODO: replace after confident
     if (!block) {
       console.error('findBlockAbove failed! [1]', block)
-      throw 'findBlockAbove failed! [1] block='+block
+      throw new Error('findBlockAbove failed! [1] block='+block)
     }
     const above = this.facts.find(
       fact => fact[0] === BLOCK_ABOVE && fact[1] === block
@@ -206,7 +206,7 @@ class WorldFacts {
     // TODO: replace after confident
     if (!above || above.length < 3) {
       console.error('findBlockAbove failed! [2]', block, this.facts)
-      throw 'findBlockAbove failed! [1] block='+block
+      throw new Error('findBlockAbove failed! [1] block='+block)
     }
     return above[2]
   }
@@ -220,7 +220,7 @@ class WorldFacts {
     // TODO: replace after confident
     if (!block) {
       console.error('findBlockBelow failed! [1]', block)
-      throw 'findBlockBelow failed! [1] block='+block
+      throw new Error('findBlockBelow failed! [1] block='+block)
     }
     const below = this.facts.find(
       fact => fact[0] === BLOCK_ABOVE && fact[2] === block
@@ -228,7 +228,7 @@ class WorldFacts {
     // TODO: replace after confident
     if (!below || below.length < 3) {
       console.error('findBlockBelow failed! [2]', block, this.facts)
-      throw 'findBlockBelow failed! [1] block='+block
+      throw new Error('findBlockBelow failed! [1] block='+block)
     }
     return below[1]
   }
@@ -272,7 +272,7 @@ class WorldFacts {
       case SPACE_ON_PLATFORM:
         return 0
       default:
-        throw 'Invalid fact! fact='+fact
+        throw new Error('Invalid fact! fact='+fact)
     }
   }
 

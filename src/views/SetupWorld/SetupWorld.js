@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import WorldFacts from '../../logic/WorldFacts'
 import World from '../../world/World'
+import { BLOCK_COLORS } from '../../world/Block'
 
 class SetupWorld extends Component {
   static propTypes = {
@@ -23,6 +24,7 @@ class SetupWorld extends Component {
     this.state = {
       stacked: this.newStacks(props.width),
       hooked: null,
+      availableColors: BLOCK_COLORS
     }
 
     this.push = this.push.bind(this)
@@ -32,13 +34,14 @@ class SetupWorld extends Component {
 
   render() {
     const { height } = this.props
-    const { hooked, stacked } = this.state
+    const { hooked, stacked, availableColors } = this.state
 
     return (
       <World
         hooked={hooked}
         stacked={stacked}
         height={height}
+        availableColors={availableColors}
         pushColumn={this.push} 
         popColumn={this.pop}
       />
@@ -51,9 +54,10 @@ class SetupWorld extends Component {
    */
   updateWorld(newState) {
     const newFacts = WorldFacts.createFromWorld(this.state.hooked, this.state.stacked)
+    const blocksCheck = newState.availableColors.sort().toString()
     this.setState(
       newState,
-      () => this.props.onUpdate(newFacts)
+      () => this.props.onUpdate(newFacts, blocksCheck)
     )
   }
 
@@ -63,15 +67,14 @@ class SetupWorld extends Component {
    * @param      {string}  color   The block color
    */
   push(column, color) {
+    let newState = this.state
+    newState.availableColors = newState.availableColors.filter(colorItem => colorItem !== color)
     if (column === -1) {
-      let newState = this.state
       newState.hooked = color
-      this.updateWorld(newState)
     } else {
-      let newState = this.state
       newState.stacked[column].push(color)
-      this.updateWorld(newState)
     }
+    this.updateWorld(newState)
   }
 
   /**
@@ -79,15 +82,15 @@ class SetupWorld extends Component {
    * @param      {int}  column  The column index
    */
   pop(column) {
+    let newState = this.state
     if (column === -1) {
-      let newState = this.state
+      newState.availableColors.push(newState.hooked)
       newState.hooked = null
-      this.updateWorld(newState)
     } else {
-      let newState = this.state
-      newState.stacked[column].pop()
-      this.updateWorld(newState)
+      const color = newState.stacked[column].pop()
+      newState.availableColors.push(color)
     }
+    this.updateWorld(newState)
   }
 
   /**

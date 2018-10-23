@@ -3,7 +3,8 @@
   height: 96px;
   margin-top: -32px;
   image-rendering: pixelated;
-  transition: 0.3s;
+  transition: opacity 0.3s;
+  transition: margin 0.3s;
 }
 
 .block-hoverable:hover {
@@ -18,6 +19,11 @@
 
 .block-red {
   filter: hue-rotate(325deg);
+}
+
+.block-yellow {
+  filter: hue-rotate(10deg);
+  filter: brightness(1.3);
 }
 
 .block-blue {

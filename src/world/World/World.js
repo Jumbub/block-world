@@ -18,7 +18,10 @@ class World extends Component {
     ),
     height: PropTypes.number,
     pushColumn: PropTypes.func,
-    popColumn: PropTypes.func
+    popColumn: PropTypes.func,
+    availableColors: PropTypes.arrayOf(
+      PropTypes.oneOf(BLOCK_COLORS)
+    )
   }
 
   static defaultProps = {
@@ -27,17 +30,26 @@ class World extends Component {
     height: 4,
     pushColumn: (column, color) => {},
     popColumn: column => {},
+    availableColors: BLOCK_COLORS
   }
 
   render() {
-    const { hooked, stacked, height, pushColumn, popColumn } = this.props
+    const { hooked, stacked, height, pushColumn, popColumn, availableColors } = this.props
 
     return (
       <div className="world-container" style={{height: 64*(height+4)}}>
         <Hook>
           {hooked
-            ? <Block color={hooked} onClick={() => popColumn(-1)} />
-            : <SelectorBlock onClick={color => pushColumn(-1, color)} />
+            ? 
+              <Block
+                color={hooked}
+                onClick={() => popColumn(-1)}
+              />
+            :
+              <SelectorBlock
+                onClick={color => pushColumn(-1, color)}
+                colors={availableColors}
+              />
           }
         </Hook>
         <div>
@@ -52,7 +64,14 @@ class World extends Component {
                       onClick={rowIndex === column.length-1 ? () => popColumn(columnIndex) : null}
                     />
                   )}
-                  {column.length < height && <SelectorBlock onClick={color => pushColumn(columnIndex, color)}/>}
+                  {
+                    (column.length < height)
+                    &&
+                    <SelectorBlock
+                      onClick={color => pushColumn(columnIndex, color)}
+                      colors={availableColors}
+                    />
+                  }
                 </div>
               )}
             </div>

@@ -11,5 +11,12 @@ export default [
     props: {
       width: 5
     }
+  },
+  {
+    component: Platform,
+    name: 'single',
+    props: {
+      width: 1
+    }
   }
 ]

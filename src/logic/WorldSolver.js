@@ -6,9 +6,9 @@ const PUT_ON_BLOCK = 'put'
 const PUT_ON_PLATFORM = 'put on table'
 const PICK_UP = 'pick up'
 
-// TODO: remove after confident it wont make infinite checks
-const MAX_CHECKS = 5
-const MAX_DEPTH = 10
+// TODO: remove after we have implemented infinite loop checking
+const MAX_CHECKS = 100
+const MAX_DEPTH = 100
 
 /**
  * Class for storing block facts
@@ -25,17 +25,18 @@ class WorldSolver {
    */
   static solve(current, target, tree={name:'intial',children:[]}, steps=[], depth=0) {
     console.log('===========================================', depth)
-    let numChecks = 0
+    
+    // Prevent infinite looping browsers (to replace with loop detection later)
     if (depth >= MAX_DEPTH) {
-      console.error('!!! Unexpected level of recursion!')
-      return steps
+      throw new Error('Unexpected level of recursion!')
     }
 
-    let allPassed = false
+    let numChecks = 0, allPassed = false
     do {
       const facts = target.getSortedFacts()
       console.log('target.getSortedFacts=', facts)
       console.log('current.getSortedFacts=', current.getSortedFacts())
+      /* eslint-disable no-loop-func */
       allPassed = facts.every(fact => {
         // Append step to tree
         let child = {
@@ -139,7 +140,7 @@ class WorldSolver {
               break
 
             default:
-              throw 'Invalid fact type! fact[0]='+fact[0]
+              throw new Error('Invalid fact type! fact[0]='+fact[0])
           }
 
           // Append action and further checks to tree
@@ -160,10 +161,9 @@ class WorldSolver {
         return true
       })
 
-      // Prevent infinite loop crashing browser
+      // Prevent infinite looping browsers (to replace with loop detection later)
       if (numChecks++ > MAX_CHECKS) {
-        console.error('!!! Unexpected number of retries')
-        return steps
+        throw new Error('Unexpected number of re-checks!')
       }
       if (!allPassed) {
         console.log('*** World modified, so performing checks again!')

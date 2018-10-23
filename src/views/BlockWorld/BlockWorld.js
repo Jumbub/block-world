@@ -8,6 +8,8 @@ import Arrow from '../../interface/Arrow'
 import TreeGraph from '../../interface/TreeGraph'
 import WorldSolver from '../../logic/WorldSolver'
 
+const NO_DECISIONS = {name:'', children: []}
+
 class BlockWorld extends Component {
   static propTypes = {
     width: PropTypes.number,
@@ -23,40 +25,59 @@ class BlockWorld extends Component {
     super()
 
     this.state = {
+      lastError: null,
       startFacts: null,
       targetFacts: null,
-      decisions: [{name:''}],
-      steps: 'None'
+      startBlockCheck: null,
+      targetBlockCheck: null,
+      solving: false,
+      decisions: [NO_DECISIONS],
+      steps: null
     }
 
-    this.go = this.go.bind(this)
+    this.onSolveClick = this.onSolveClick.bind(this)
+    this.solve = this.solve.bind(this)
   }
 
   render() {
-    const { decisions, steps } = this.state
+    const { decisions, steps, startBlockCheck, targetBlockCheck, lastError, solving } = this.state
 
     return (
       <div className="block-world">
+        {lastError &&
+          <Module title="Something went wrong">
+            <p>
+              {lastError}
+            </p>
+            <p>
+              <em>Note: 90% of errors are user error</em>
+            </p>
+          </Module>
+        }
         <Module title="Start World">
           <SetupWorld
-            onUpdate={facts => this.setState({startFacts: facts})}
+            onUpdate={(facts, blockCheck) => this.setState({startFacts: facts, 'startBlockCheck': blockCheck})}
             width={this.props.width}
             height={this.props.height}
           />
         </Module>
         <Arrow
-          onClick={this.go}
+          onClick={
+            startBlockCheck !== null && startBlockCheck === targetBlockCheck && !solving
+              ? this.onSolveClick
+              : null
+          }
         />
         <Module title="Target World">
           <SetupWorld
-            onUpdate={facts => this.setState({targetFacts: facts})}
+            onUpdate={(facts, blockCheck) => this.setState({targetFacts: facts, 'targetBlockCheck': blockCheck})}
             width={this.props.width}
             height={this.props.height}
           />
         </Module>
         <Module title="Decision Tree">
           <p>
-            Solution: {steps}
+            Solution: {steps || '-'}
           </p>
           <TreeGraph
             tree={decisions}
@@ -67,24 +88,52 @@ class BlockWorld extends Component {
   }
 
   /**
-   * Do something amazing, please
+   * On the solve button being clicked.
+   * (Checks if worlds are valid for solving, resets the state, runs the solve method)
    */
-  go() {
-    const { startFacts, targetFacts } = this.state
+  onSolveClick() {
+    const { startFacts, targetFacts, startBlockCheck, targetBlockCheck } = this.state
 
-    if (!startFacts || !targetFacts) {
+    if (
+      // Worlds have not been initialised
+      (!startFacts || !targetFacts)
+      // Worlds do not have matching blocks
+      || (startBlockCheck === null || startBlockCheck !== targetBlockCheck)
+    ) {
       return null
     }
 
-    // This line will call the WorldSolver class with the facts
-    let tree = {name:'intial',children:[]}
-    const steps = WorldSolver.solve(startFacts.clone(), targetFacts.clone(), tree)
-      .map(step => step.toString().replace(',', ' '))
-      .toString().replace(',', ' ; ')
+    // Clean 
+    this.setState({
+      lastError: null,
+      solving: true,
+      steps: null,
+      tree: [NO_DECISIONS],
+    }, () => setTimeout(() => {this.solve()}, 1 ))
+  }
+
+  /**
+   * Solve the worlds.
+   * (Runs WorldSolver, displays output/errors)
+   */
+  solve() {
+    const { startFacts, targetFacts } = this.state
+
+    let solveError = null, steps = null, tree = NO_DECISIONS
+
+    try {
+      steps = WorldSolver.solve(startFacts.clone(), targetFacts.clone(), tree)
+        .map(step => step.toString().replace(',', ' '))
+        .toString().replace(',', ' ; ')
+    } catch (error) {
+      solveError = error.toString()
+    }
 
     this.setState({
-      decisions: [tree],
-      steps: steps
+      lastError: solveError,
+      solving: false,
+      steps: steps,
+      tree: [tree],
     })
   }
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import BlockImage from './block.png'
 import './block.css'
 
-const BLOCK_COLORS = ['red', 'green', 'blue']
+const BLOCK_COLORS = ['red', 'green', 'blue', 'yellow']
 
 class Block extends Component {
 
