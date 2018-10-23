@@ -13,4 +13,5 @@
 
   .selector-block .block {
     opacity: 0.5;
+    image-rendering: unset;
   }
