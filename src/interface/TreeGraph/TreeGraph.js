@@ -4,11 +4,11 @@ import Tree from 'react-d3-tree';
 
 class TreeGraph extends PureComponent {
   static propTypes = {
-    tree: PropTypes.array.isRequired
+    tree: PropTypes.object
   }
 
   static defaultProps = {
-    tree: [{}]
+    tree: {name: ''}
   }
 
   state = {}
@@ -32,7 +32,7 @@ class TreeGraph extends PureComponent {
         fontFamily: 'Roboto, sans-serif'
       }}>
         <Tree 
-          data={this.props.tree} 
+          data={[this.props.tree]} 
           translate={this.state.translate} 
           orientation={'horizontal'}
           collapsible={false}

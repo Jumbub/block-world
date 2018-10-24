@@ -8,7 +8,7 @@ import Arrow from '../../interface/Arrow'
 import TreeGraph from '../../interface/TreeGraph'
 import WorldSolver from '../../logic/WorldSolver'
 
-const NO_DECISIONS = {name:'', children: []}
+const NO_DECISIONS = () => ({name:'', children: []})
 
 class BlockWorld extends Component {
   static propTypes = {
@@ -31,12 +31,11 @@ class BlockWorld extends Component {
       startBlockCheck: null,
       targetBlockCheck: null,
       solving: false,
-      decisions: [NO_DECISIONS],
+      decisions: NO_DECISIONS(),
       steps: null
     }
 
     this.onSolveClick = this.onSolveClick.bind(this)
-    this.solve = this.solve.bind(this)
   }
 
   render() {
@@ -89,7 +88,6 @@ class BlockWorld extends Component {
 
   /**
    * On the solve button being clicked.
-   * (Checks if worlds are valid for solving, resets the state, runs the solve method)
    */
   onSolveClick() {
     const { startFacts, targetFacts, startBlockCheck, targetBlockCheck } = this.state
@@ -103,24 +101,8 @@ class BlockWorld extends Component {
       return null
     }
 
-    // Clean 
-    this.setState({
-      lastError: null,
-      solving: true,
-      steps: null,
-      tree: [NO_DECISIONS],
-    }, () => setTimeout(() => {this.solve()}, 1 ))
-  }
-
-  /**
-   * Solve the worlds.
-   * (Runs WorldSolver, displays output/errors)
-   */
-  solve() {
-    const { startFacts, targetFacts } = this.state
-
-    let solveError = null, steps = null, tree = NO_DECISIONS
-
+    // Solve world, save errors
+    let solveError = null, steps = null, tree = NO_DECISIONS()
     try {
       steps = WorldSolver.solve(startFacts.clone(), targetFacts.clone(), tree)
         .map(step => step.toString().replace(',', ' '))
@@ -133,7 +115,7 @@ class BlockWorld extends Component {
       lastError: solveError,
       solving: false,
       steps: steps,
-      tree: [tree],
+      decisions: tree
     })
   }
 }

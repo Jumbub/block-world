@@ -7,16 +7,16 @@ export default [
   },
   {
     component: TreeGraph,
-    name: 'example',
+    name: '2 children',
     props: {
-      tree: [{
+      tree: {
         name: 'Parent',
         children: [{
           name: 'Child One'
         }, {
           name: 'Child Two'
         }]
-      }]
+      }
     }
   }
 ]
