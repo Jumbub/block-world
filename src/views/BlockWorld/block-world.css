@@ -28,5 +28,6 @@
     font-weight: 550;
   }
   .block-world .vertical-group {
+    min-width: 430px;
     flex-wrap: none;
   }
