@@ -1,9 +1,15 @@
+// Fact labels
 const HOOKED = 'hooked'
 const NOTHING_HOOKED = 'nothing hooked'
 const ON_PLATFORM = 'on platform'
 const NOTHING_ABOVE = 'nothing above'
 const BLOCK_ABOVE = 'block above'
 const SPACE_ON_PLATFORM = 'space on platform'
+
+// Action labels
+const PUT_ON_BLOCK = 'put'
+const PUT_ON_PLATFORM = 'put on platform'
+const PICK_UP = 'pick up'
 
 /**
  * Class for storing block facts
@@ -93,7 +99,6 @@ class WorldFacts {
    * @param      {string}  block   The block
    */
   pickUp(block) {
-    console.log('^^^^^ pickUp', this.toArray())
     const nothingHookedIndex = this.facts.findIndex(fact => fact[0] === NOTHING_HOOKED)
     this.facts.splice(nothingHookedIndex, 1)
 
@@ -114,8 +119,6 @@ class WorldFacts {
 
       this.facts.push([NOTHING_ABOVE, blockBelow])
     }
-
-    console.log('^^^^^', this.toArray())
   }
 
   /**
@@ -123,7 +126,6 @@ class WorldFacts {
    * @param      {string}  block   The block
    */
   putOnPlatform(block) {
-    console.log('^^^^^ putOnPlatform', this.toArray())
     const hookedIndex = this.facts.findIndex(fact => fact[0] === HOOKED && fact[1] === block)
     this.facts.splice(hookedIndex, 1)
     const spaceIndex = this.facts.findIndex(fact => fact[0] === SPACE_ON_PLATFORM)
@@ -132,7 +134,6 @@ class WorldFacts {
     this.facts.push([NOTHING_HOOKED])
     this.facts.push([ON_PLATFORM, block])
     this.facts.push([NOTHING_ABOVE, block])
-    console.log('^^^^^', this.toArray())
   }
 
   /**
@@ -141,7 +142,6 @@ class WorldFacts {
    * @param      {string}  topBlock     The block above
    */
   putOnBlock(bottomBlock, topBlock) {
-    console.log('^^^^^ putOnBlock', this.toArray())
     const hookedIndex = this.facts.findIndex(fact => fact[0] === HOOKED && fact[1] === topBlock)
     this.facts.splice(hookedIndex, 1)
     const nothingAboveIndex = this.facts.findIndex(fact => fact[0] === NOTHING_ABOVE && fact[1] === bottomBlock)
@@ -150,7 +150,6 @@ class WorldFacts {
     this.facts.push([NOTHING_HOOKED])
     this.facts.push([BLOCK_ABOVE, bottomBlock, topBlock])
     this.facts.push([NOTHING_ABOVE, topBlock])
-    console.log('^^^^^', this.toArray())
   }
 
   /**
@@ -205,7 +204,6 @@ class WorldFacts {
     )
     // TODO: replace after confident
     if (!above || above.length < 3) {
-      console.error('findBlockAbove failed! [2]', block, this.facts)
       throw new Error('findBlockAbove failed! [1] block='+block)
     }
     return above[2]
@@ -219,7 +217,6 @@ class WorldFacts {
   findBlockBelow(block) {
     // TODO: replace after confident
     if (!block) {
-      console.error('findBlockBelow failed! [1]', block)
       throw new Error('findBlockBelow failed! [1] block='+block)
     }
     const below = this.facts.find(
@@ -227,7 +224,6 @@ class WorldFacts {
     )
     // TODO: replace after confident
     if (!below || below.length < 3) {
-      console.error('findBlockBelow failed! [2]', block, this.facts)
       throw new Error('findBlockBelow failed! [1] block='+block)
     }
     return below[1]
@@ -287,17 +283,10 @@ class WorldFacts {
   /**
    * Returns an array representation of the facts
    */
-  toArray() {
+  getFactArray() {
     return this.facts.map(
-      factSet => factSet.toString()
+      fact => WorldFacts.factToString(fact)
     ).sort()
-  }
-
-  /**
-   * Returns an array representation of the facts
-   */
-  toString() {
-    return this.toArray().reduce((string, fact) => string + '|' + fact)
   }
 
   /**
@@ -307,7 +296,54 @@ class WorldFacts {
   clone() {
     return new WorldFacts(this.facts.slice())
   }
+
+  /**
+   * Return the stringified version of the fact array
+   *
+   * @param      {array}   fact     The fact
+   * @param      {bool}    verbose  Verbose explanation
+   * @return     {string}  fact     The stringified explanation
+   */
+  static factToString(fact, verbose=true) {
+    if (fact[0] === PUT_ON_PLATFORM) {
+      return verbose
+        ? 'Put the ' + fact[1] + ' block on the platform'
+        : 'put ' + fact[1] + ' on platform'
+    } else if (fact[0] === PUT_ON_BLOCK) {
+      return verbose
+        ? 'Put the ' + fact[2] + ' block on the ' + fact[1] + ' block'
+        : 'put ' + fact[2] + ' on ' + fact[1]
+    } else if (fact[0] === PICK_UP) {
+      return verbose
+        ? 'Pick up the ' + fact[1] + ' block'
+        : 'pick up ' + fact[1]
+    } else if (fact[0] === HOOKED) {
+      return verbose
+        ? 'The ' + fact[1] + ' block is hooked'
+        : fact[1] + ' hooked'
+    } else if (fact[0] === NOTHING_HOOKED) {
+      return verbose
+        ? 'There are no hooked blocks'
+        : 'nothing hooked'
+    } else if (fact[0] === ON_PLATFORM) {
+      return verbose
+        ? 'The ' + fact[1] + ' block is on the platform'
+        : fact[1] + ' on platform'
+    } else if (fact[0] === NOTHING_ABOVE) {
+      return verbose
+        ? 'There are no blocks above the ' + fact[1] + ' block'
+        : 'nothing above ' + fact[1] + ' block'
+    } else if (fact[0] === BLOCK_ABOVE) {
+      return verbose
+        ? 'The ' + fact[2] + ' block is above the ' + fact[1] + ' block'
+        : fact[2] + ' block above ' + fact[1]
+    } else if (fact[0] === SPACE_ON_PLATFORM) {
+      return verbose
+        ? 'There is a space on the platform'
+        : 'space on platform'
+    }
+  }
 }
 
 export default WorldFacts
-export { HOOKED, NOTHING_HOOKED, ON_PLATFORM, NOTHING_ABOVE, BLOCK_ABOVE, SPACE_ON_PLATFORM }
+export { HOOKED, NOTHING_HOOKED, ON_PLATFORM, NOTHING_ABOVE, BLOCK_ABOVE, SPACE_ON_PLATFORM, PUT_ON_BLOCK, PUT_ON_PLATFORM, PICK_UP }

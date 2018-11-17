@@ -4,3 +4,29 @@
   flex-wrap: wrap;
   align-items: center;
 }
+  .block-world ol {
+    counter-reset: item;
+  }
+  .block-world .numbered li {
+    display: block;
+  }
+  .block-world li:before {
+    color: gray;
+  }
+  .block-world .numbered li:before {
+    content: counters(item, ".") ": ";
+    font-weight: 600;
+    counter-increment: item;
+  }
+  .block-world .legend {
+    display: flex;
+  }
+  .block-world .legend .symbol {
+    text-align: right;
+    margin-right: 5px;
+    min-width: 52px;
+    font-weight: 550;
+  }
+  .block-world .vertical-group {
+    flex-wrap: none;
+  }

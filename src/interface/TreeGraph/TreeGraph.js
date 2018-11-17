@@ -3,6 +3,38 @@ import PropTypes from 'prop-types'
 import Tree from 'react-d3-tree';
 
 class TreeGraph extends PureComponent {
+  /**
+   * Create a new node on the tree.
+   *
+   * @param      {string}  name      The name
+   * @param      {string}  children  The children
+   * @param      {string}  type      The custom type
+   * @return     {Object}  The new node
+   */
+  static newTreeNode(name, children, type) {
+    return {
+      name: name,
+      children: children,
+      nodeSvgShape: {
+        shape: 'rect',
+        shapeProps: {
+          width: type === 'b' ? 175 : 225,
+          height: 30,
+          x: -5,
+          y: -15,
+          strokeWidth: 3,
+          fill: 'rgb(240, 240, 240)',
+          stroke: 'rgb('
+            + (type === 'r' ? '200' : '50') + ','
+            + (type === 'g' ? '200' : '50') + ','
+            + (type === 'b' ? '200' : '50') + ')',
+          rx: 5,
+          ry: 5
+        },
+      }
+    }
+  }
+
   static propTypes = {
     tree: PropTypes.object
   }
@@ -26,7 +58,7 @@ class TreeGraph extends PureComponent {
   render() {
     return (
       <div ref={tc => (this.treeContainer = tc)} style={{
-        width: '800px',
+        width: '100%',
         height: '400px',
         backgroundColor: 'rgb(200, 200, 200)',
         fontFamily: 'Roboto, sans-serif'
@@ -36,7 +68,7 @@ class TreeGraph extends PureComponent {
           translate={this.state.translate} 
           orientation={'horizontal'}
           collapsible={false}
-          nodeSize={{x: 200, y: 50}}
+          nodeSize={{x: 250, y: 50}}
           nodeSvgShape={{
             shape: 'rect',
             shapeProps: {
@@ -46,18 +78,18 @@ class TreeGraph extends PureComponent {
               y: -2,
             }
           }}
+          textLayout={{
+            textAnchor: 'start',
+            y: 0
+          }}
           styles={{
             links: {stroke: 'white', strokeWidth: 2 },
             nodes: {
               node: {
-                circle: {stroke: 'black', strokeWidth: 1 },
-                name: {stroke: 'black', strokeWidth: 1 },
-                attributes: {stroke: 'black', strokeWidth: 1 },
+                name: { stroke: 'black', y: '10px' },
               },
               leafNode: {
-                circle: {stroke: 'black', strokeWidth: 1 },
-                name: {stroke: 'black', strokeWidth: 1 },
-                attributes: {stroke: 'black', strokeWidth: 1 },
+                name: { stroke: 'black' },
               },
             },
           }}
