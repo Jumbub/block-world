@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './app.css';
+import './App.css';
 import BlockWorld from './views/BlockWorld'
 
 class App extends Component {
