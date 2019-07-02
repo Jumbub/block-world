@@ -134,6 +134,12 @@ class WorldSolver {
         tree.children.push(child)
         return true
       })
+      
+      if (!allPassed) {
+        tree.children.push(
+          TreeGraph.newTreeNode('re-evaluate facts', [], TreeGraph.SEPERATOR, numChecks)
+        )
+      }
 
       // Prevent infinite looping browsers (to replace with loop detection later)
       if (numChecks++ > MAX_CHECKS) {

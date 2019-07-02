@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import Tree from 'react-d3-tree';
 
 class TreeGraph extends PureComponent {
+  static SEPERATOR = 'seperator'
+  
   /**
    * Create a new node on the tree.
    *
@@ -12,6 +14,8 @@ class TreeGraph extends PureComponent {
    * @return     {Object}  The new node
    */
   static newTreeNode(name, children, type) {
+    const isSeperator = type === this.SEPERATOR
+    const invisible = '#0000'
     return {
       name: name,
       children: children,
@@ -23,11 +27,15 @@ class TreeGraph extends PureComponent {
           x: -5,
           y: -15,
           strokeWidth: 3,
-          fill: 'rgb(240, 240, 240)',
-          stroke: 'rgb('
-            + (type === 'r' ? '200' : '50') + ','
-            + (type === 'g' ? '200' : '50') + ','
-            + (type === 'b' ? '200' : '50') + ')',
+          fill: isSeperator
+            ? invisible
+            : 'rgb(240, 240, 240)',
+          stroke: isSeperator
+            ? invisible
+            : 'rgb('
+              + (type === 'r' ? '200' : '50') + ','
+              + (type === 'g' ? '200' : '50') + ','
+              + (type === 'b' ? '200' : '50') + ')',
           rx: 5,
           ry: 5
         },
