@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Card, CardHeader, CardBody, Container, Col, Row } from 'reactstrap';
 
 import './block-world.css'
 import SetupWorld from '../SetupWorld'
-import Module from '../../interface/Module'
 import Arrow from '../../interface/Arrow'
 import TreeGraph from '../../interface/TreeGraph'
 import WorldSolver from '../../logic/WorldSolver'
@@ -43,55 +43,76 @@ class BlockWorld extends Component {
     const { decisions, steps, startBlockCheck, targetBlockCheck, lastError, solving, startFacts, targetFacts } = this.state
 
     return (
-      <div className="block-world">
+      <Container>
         {lastError &&
-          <Module title="Something went wrong">
+          <Card>
+            <CardHeader>Something went wrong</CardHeader>
+            <CardBody>
             <p>
               {lastError}
             </p>
-          </Module>
+            </CardBody>
+          </Card>
         }
-        <div className="vertical-group">
-          <Module title="Current World">
-            <SetupWorld
-              onUpdate={(facts, blockCheck) => this.setState({startFacts: facts, 'startBlockCheck': blockCheck})}
-              width={this.props.width}
-              height={this.props.height}
+        <Row>
+          <Col>
+            <Card>
+              <CardHeader>Current World</CardHeader>
+              <CardBody>
+              <SetupWorld
+                onUpdate={(facts, blockCheck) => this.setState({startFacts: facts, 'startBlockCheck': blockCheck})}
+                width={this.props.width}
+                height={this.props.height}
+              />
+              </CardBody>
+            </Card>
+            <Card>
+              <CardHeader>Decision World Facts</CardHeader>
+              <CardBody>
+              {startFacts
+                ? <ul>
+                    {startFacts.getFactArray().map((fact, i) => <li key={'fact'+i}>{fact}</li>)}
+                  </ul>
+                : null}
+              </CardBody>
+            </Card>
+          </Col>
+          <Col>
+          <Arrow
+            onClick={
+              startBlockCheck !== null && startBlockCheck === targetBlockCheck && !solving
+                ? this.onSolveClick
+                : null
+            }
             />
-          </Module>
-          <Module title="Current World Facts">
-            {startFacts
-              ? <ul>
-                  {startFacts.getFactArray().map((fact, i) => <li key={'fact'+i}>{fact}</li>)}
-                </ul>
-              : null}
-          </Module>
-        </div>
-        <Arrow
-          onClick={
-            startBlockCheck !== null && startBlockCheck === targetBlockCheck && !solving
-              ? this.onSolveClick
-              : null
-          }
-        />
+          </Col>
+          <Col>
+            <Card>
+              <CardHeader>Target World</CardHeader>
+              <CardBody>
+              <SetupWorld
+                onUpdate={(facts, blockCheck) => this.setState({targetFacts: facts, 'targetBlockCheck': blockCheck})}
+                width={this.props.width}
+                height={this.props.height}
+              />
+              </CardBody>
+            </Card>
+            <Card>
+              <CardHeader>Target World Facts</CardHeader>
+              <CardBody>
+              {targetFacts
+                ? <ul>
+                    {targetFacts.getFactArray().map((fact, i) => <li key={'fact'+i}>{fact}</li>)}
+                  </ul>
+                : null}
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
         <div className="vertical-group">
-          <Module title="Target World">
-            <SetupWorld
-              onUpdate={(facts, blockCheck) => this.setState({targetFacts: facts, 'targetBlockCheck': blockCheck})}
-              width={this.props.width}
-              height={this.props.height}
-            />
-          </Module>
-          <Module title="Target World Facts">
-            {targetFacts
-              ? <ul>
-                  {targetFacts.getFactArray().map((fact, i) => <li key={'fact'+i}>{fact}</li>)}
-                </ul>
-              : null}
-          </Module>
-        </div>
-        <div className="vertical-group">
-          <Module title="Solution">
+          <Card>
+            <CardHeader>Solution</CardHeader>
+            <CardBody>
               <p>
                 The following steps are required to make the current world reach the target world.
               </p>
@@ -105,8 +126,11 @@ class BlockWorld extends Component {
                   : 'None (the target world is the same)'
                 }
               </ol>
-          </Module>
-          <Module title="Decision Tree">
+            </CardBody>
+          </Card>
+          <Card>
+            <CardHeader>Decision Tree</CardHeader>
+            <CardBody>
             <TreeGraph
               tree={decisions}
             />
@@ -140,9 +164,10 @@ class BlockWorld extends Component {
               </li>
               <li>Return the steps necessary to achieve the target world and the updated current world</li>
             </ol>
-          </Module>
+            </CardBody>
+          </Card>
         </div>
-      </div>
+      </Container>
     )
   }
 
