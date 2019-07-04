@@ -27,8 +27,20 @@ class BlockWorld extends Component {
 
     this.state = {
       lastError: null,
-      startFacts: null,
-      targetFacts: null,
+      startFacts: new WorldFacts([
+        ['nothing hooked'],
+        ['space on platform'],
+        ['space on platform'],
+        ['space on platform'],
+        ['space on platform'],
+      ]),
+      targetFacts: new WorldFacts([
+        ['nothing hooked'],
+        ['space on platform'],
+        ['space on platform'],
+        ['space on platform'],
+        ['space on platform'],
+      ]),
       startBlockCheck: null,
       targetBlockCheck: null,
       solving: false,
