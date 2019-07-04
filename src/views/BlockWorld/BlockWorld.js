@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardHeader, CardBody, Container, Col, Row } from 'reactstrap';
+import { Card, CardHeader, CardBody, Container, Col, Row, ListGroup, ListGroupItem, Alert, Table, Button, Jumbotron } from 'reactstrap';
 
 import './block-world.css'
 import SetupWorld from '../SetupWorld'
@@ -9,7 +9,7 @@ import TreeGraph from '../../interface/TreeGraph'
 import WorldSolver from '../../logic/WorldSolver'
 import WorldFacts from '../../logic/WorldFacts'
 
-const NO_DECISIONS = () => ({name:'', children: []})
+const NO_DECISIONS = () => ({ name: '', children: [] })
 
 class BlockWorld extends Component {
   static propTypes = {
@@ -19,7 +19,7 @@ class BlockWorld extends Component {
 
   static defaultProps = {
     width: 4,
-    height: 4
+    height: 4,
   }
 
   constructor() {
@@ -42,132 +42,145 @@ class BlockWorld extends Component {
   render() {
     const { decisions, steps, startBlockCheck, targetBlockCheck, lastError, solving, startFacts, targetFacts } = this.state
 
+    const canSolve = startBlockCheck !== null && startBlockCheck === targetBlockCheck && !solving
+
     return (
-      <Container>
-        {lastError &&
-          <Card>
-            <CardHeader>Something went wrong</CardHeader>
-            <CardBody>
-            <p>
-              {lastError}
+      <>
+        <Jumbotron>
+          <Container>
+            <h1 className="display-3">Backwards computation!</h1>
+            <p className="lead">
+              This project visualises an implementation of backwards chaining to automatically stack blocks.
             </p>
-            </CardBody>
-          </Card>
-        }
-        <Row>
-          <Col>
-            <Card>
-              <CardHeader>Current World</CardHeader>
-              <CardBody>
-              <SetupWorld
-                onUpdate={(facts, blockCheck) => this.setState({startFacts: facts, 'startBlockCheck': blockCheck})}
-                width={this.props.width}
-                height={this.props.height}
-              />
-              </CardBody>
-            </Card>
-            <Card>
-              <CardHeader>Decision World Facts</CardHeader>
-              <CardBody>
-              {startFacts
-                ? <ul>
-                    {startFacts.getFactArray().map((fact, i) => <li key={'fact'+i}>{fact}</li>)}
-                  </ul>
-                : null}
-              </CardBody>
-            </Card>
-          </Col>
-          <Col>
-          <Arrow
-            onClick={
-              startBlockCheck !== null && startBlockCheck === targetBlockCheck && !solving
-                ? this.onSolveClick
-                : null
-            }
-            />
-          </Col>
-          <Col>
-            <Card>
-              <CardHeader>Target World</CardHeader>
-              <CardBody>
-              <SetupWorld
-                onUpdate={(facts, blockCheck) => this.setState({targetFacts: facts, 'targetBlockCheck': blockCheck})}
-                width={this.props.width}
-                height={this.props.height}
-              />
-              </CardBody>
-            </Card>
-            <Card>
-              <CardHeader>Target World Facts</CardHeader>
-              <CardBody>
-              {targetFacts
-                ? <ul>
-                    {targetFacts.getFactArray().map((fact, i) => <li key={'fact'+i}>{fact}</li>)}
-                  </ul>
-                : null}
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-        <div className="vertical-group">
+            <hr className="my-2" />
+          </Container>
+        </Jumbotron>
+        <Container>
+          <Row>
+            <Col>
+              <Card>
+                <CardHeader tag="h4">Current Facts Visualised</CardHeader>
+                <CardBody>
+                  <SetupWorld
+                    onUpdate={(facts, blockCheck) => this.setState({ startFacts: facts, 'startBlockCheck': blockCheck })}
+                    width={this.props.width}
+                    height={this.props.height}
+                  />
+                </CardBody>
+              </Card>
+              <Card>
+                <CardHeader tag="h4">Current Facts</CardHeader>
+                <CardBody>
+                  {startFacts
+                    ? <ListGroup>
+                      {startFacts.getFactArray().map((fact, i) => <ListGroupItem key={'fact' + i}>{fact}</ListGroupItem>)}
+                    </ListGroup>
+                    : null}
+                </CardBody>
+              </Card>
+            </Col>
+            <Col>
+              <Card>
+                <CardHeader tag="h4">Target Facts Visualised</CardHeader>
+                <CardBody>
+                  <SetupWorld
+                    onUpdate={(facts, blockCheck) => this.setState({ targetFacts: facts, 'targetBlockCheck': blockCheck })}
+                    width={this.props.width}
+                    height={this.props.height}
+                  />
+                </CardBody>
+              </Card>
+              <Card>
+                <CardHeader tag="h4">Target Facts</CardHeader>
+                <CardBody>
+                  {targetFacts
+                    ? <ListGroup>
+                      {targetFacts.getFactArray().map((fact, i) => <ListGroupItem key={'fact' + i}>{fact}</ListGroupItem>)}
+                    </ListGroup>
+                    : null}
+                </CardBody>
+              </Card>
+            </Col>
+            <Col>
+              {lastError &&
+                <Alert color="danger">
+                  {lastError}
+                </Alert>
+              }
+              {
+                !canSolve &&
+                <Alert color="warning">
+                  You cannot press "Find solution" until the assumptions are met.
+              </Alert>
+              }
+              <Button
+                color="primary"
+                size="lg"
+                block
+                disabled={!canSolve}
+                onClick={this.onSolveClick}
+              >
+                Find solution
+            </Button>
+              <Card>
+                <CardHeader tag="h4">Solution</CardHeader>
+                <CardBody>
+                  <Table bordered>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Step</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {steps
+                        ? steps.map((step, i) =>
+                          <tr key={'step' + i}>
+                            <td scope="row">{i}</td>
+                            <td>{WorldFacts.factToString(step)}</td>
+                          </tr>)
+                        : null
+                      }
+                    </tbody>
+                  </Table>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
           <Card>
-            <CardHeader>Solution</CardHeader>
+            <CardHeader tag="h4">Decision Tree</CardHeader>
             <CardBody>
+              <TreeGraph
+                tree={decisions}
+              />
               <p>
-                The following steps are required to make the current world reach the target world.
+                The tree above shows the decisions made to determine the solution.<br />
               </p>
-              <strong>Steps: </strong>
-              <ol>
-                {steps
-                  ? steps.map((step, i) => 
-                    <li key={'step'+i}>
-                      {WorldFacts.factToString(step)}
-                    </li>)
-                  : 'None (the target world is the same)'
-                }
+              <ListGroup>
+                <ListGroupItem color="success">Green indicates that the current world contains this fact</ListGroupItem>
+                <ListGroupItem color="danger">Red indicates that the current world does not contain this fact</ListGroupItem>
+                <ListGroupItem color="info">Blue indicates the required action to satisfy this fact</ListGroupItem>
+                <ListGroupItem>Re-evalute facts indicates that the world must be evaluated again, because an action has taken place</ListGroupItem>
+              </ListGroup>
+              <p>
+                <strong>Explanation of internal logic:</strong>
+              </p>
+              <ol className="numbered">
+                <li>Find a fact in the target world which is missing from the current world</li>
+                <li>If a fact is missing from the current world -
+                <ol>
+                    <li>Find the action which will set this fact</li>
+                    <li>Recursively call step 1, but with the required facts to perform the action as the target world</li>
+                    <li>Store the action as a step, and apply it to the current world</li>
+                    <li>Go back to step 1</li>
+                  </ol>
+                </li>
+                <li>Return the steps necessary to achieve the target world and the updated current world</li>
               </ol>
             </CardBody>
           </Card>
-          <Card>
-            <CardHeader>Decision Tree</CardHeader>
-            <CardBody>
-            <TreeGraph
-              tree={decisions}
-            />
-            <p>
-              The tree above shows the decisions made to determine the solution.<br/>
-            </p>
-            <div className="legend">
-              <div className="symbol" style={{color: 'rgb(50, 200, 50)'}}>Green</div>
-              <div>indicates the current world has this fact</div>
-            </div>
-            <div className="legend">
-              <div className="symbol" style={{color: 'rgb(200, 50, 50)'}}>Red</div>
-              <div>indicates the current world is missing this fact</div>
-            </div>
-            <div className="legend">
-              <div className="symbol" style={{color: 'rgb(50, 50, 200)'}}>Blue</div>
-              <div>indicates the required action to achieve the missing fact</div>
-            </div>
-            <p>
-              <strong>Explanation of internal logic:</strong>
-            </p>
-            <ol className="numbered">
-              <li>Find a fact in the target world which is missing from the current world</li>
-              <li>If a fact is missing from the current world -
-                <ol>
-                  <li>Find the action which will set this fact</li>
-                  <li>Recursively call step 1, but with the required facts to perform the action as the target world</li>
-                  <li>Store the action as a step, and apply it to the current world</li>
-                  <li>Go back to step 1</li>
-                </ol>
-              </li>
-              <li>Return the steps necessary to achieve the target world and the updated current world</li>
-            </ol>
-            </CardBody>
-          </Card>
-        </div>
-      </Container>
+        </Container>
+      </>
     )
   }
 

@@ -26,16 +26,18 @@ class TreeGraph extends PureComponent {
           height: 30,
           x: -5,
           y: -15,
-          strokeWidth: 3,
+          strokeWidth: 1,
+          color: '#fff',
           fill: isSeperator
             ? invisible
-            : 'rgb(240, 240, 240)',
+            : (type === 'r' && '#f5c6cb')
+            || (type === 'g' && '#c3e6cb')
+            || (type === 'b' && '#bee5eb'),
           stroke: isSeperator
             ? invisible
-            : 'rgb('
-              + (type === 'r' ? '200' : '50') + ','
-              + (type === 'g' ? '200' : '50') + ','
-              + (type === 'b' ? '200' : '50') + ')',
+            : (type === 'r' && '#f5c6cb')
+            || (type === 'g' && '#c3e6cb')
+            || (type === 'b' && '#bee5eb'),
           rx: 5,
           ry: 5
         },
@@ -94,10 +96,10 @@ class TreeGraph extends PureComponent {
             links: {stroke: 'white', strokeWidth: 2 },
             nodes: {
               node: {
-                name: { stroke: 'black', y: '10px' },
+                name: { stroke: '#333', y: '10px', strokeWidth: 0.6 },
               },
               leafNode: {
-                name: { stroke: 'black' },
+                name: { stroke: '#155724', strokeWidth: 0.2 },
               },
             },
           }}

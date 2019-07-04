@@ -14,3 +14,7 @@ code {
 }
 
 @import 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css';
+
+.card {
+  margin-bottom: 16px;
+}

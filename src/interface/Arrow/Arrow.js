@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import ArrowImage from './arrow.png'
 import './arrow.css'
+import { Button } from 'reactstrap';
 
 class Arrow extends Component {
 
@@ -18,12 +19,16 @@ class Arrow extends Component {
     const { onClick } = this.props
 
     return (
-      <img
-        src={ArrowImage}
-        className={'arrow '+(onClick ? 'arrow-hoverable' : 'arrow-disabled')}
-        onClick={onClick}
-        alt="arrow"
-      />
+      <Button color="link">
+        Solve
+        <br></br>
+        <img
+          src={ArrowImage}
+          className={'arrow '+(onClick ? 'arrow-hoverable' : 'arrow-disabled')}
+          onClick={onClick}
+          alt="arrow"
+        />
+      </Button>
     )
   }
 }
