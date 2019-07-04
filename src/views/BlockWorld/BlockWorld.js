@@ -80,37 +80,39 @@ class BlockWorld extends Component {
           <Row>
             <Col>
               <Card>
-                <CardHeader tag="h4">Available Facts</CardHeader>
+                <CardHeader tag="h4">Facts</CardHeader>
                 <CardBody>
                   <p>
-                    Facts are used to describe the world.
+                    Facts are used to describe the world.<br />
+                    Every fact can be derived from an action.
                   </p>
-                  <ListGroup>
-                    <ListGroupItem>
-                      There are no hooked blocks
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      The X block is hooked
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      The X block is on the platform
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      There is a space on the platform
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      The X block is above the Y block
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      The are no blocks above the X block
-                    </ListGroupItem>
-                  </ListGroup>
+                  <Table bordered>
+                    <thead>
+                      <tr>
+                        <th>Fact</th>
+                        <th>Action to derive fact</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[['There are no hooked blocks', 'Put the X block on the platform'],
+                      ['The X block is hooked', 'Pick up the X block'],
+                      ['The X block is on the platform', 'Put the X block on the platform'],
+                      ['There is a space on the platform', 'Pick up the X block'],
+                      ['The X block is above the Y block', 'Put the X block on the Y block'],
+                      ['The are no blocks above the X block', 'Pick up the Y block'],].map((step, i) =>
+                        <tr key={'step' + i}>
+                          <td>{step[0]}</td>
+                          <td>{step[1]}</td>
+                        </tr>)
+                      }
+                    </tbody>
+                  </Table>
                 </CardBody>
               </Card>
             </Col>
             <Col>
               <Card>
-                <CardHeader tag="h4">Available Actions</CardHeader>
+                <CardHeader tag="h4">Actions</CardHeader>
                 <CardBody>
                   <p>
                     Actions are used to manipulate the world.
@@ -118,44 +120,27 @@ class BlockWorld extends Component {
                   <p>
                     Each action has a set of facts which must be true in order for the action to be possible.
                   </p>
-                  <ListGroup>
-                    <ListGroupItem>
-                      Put the X block on the platform
-                      <br /><br />
-                      <ul>
-                        <li>
-                          The X block is hooked
-                        </li>
-                        <li>
-                          There is a space on the platform
-                        </li>
-                      </ul>
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      Pick up the X block
-                      <br /><br />
-                      <ul>
-                        <li>
-                          There are no hooked blocks
-                        </li>
-                        <li>
-                          There are no blocks above the X block
-                        </li>
-                      </ul>
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      Put the X block on the Y block
-                      <br /><br />
-                      <ul>
-                        <li>
-                          The X block is hooked
-                        </li>
-                        <li>
-                          There are no blocks above the Y block
-                        </li>
-                      </ul>
-                    </ListGroupItem>
-                  </ListGroup>
+                  <Table bordered>
+                    <thead>
+                      <tr>
+                        <th>Action</th>
+                        <th>Facts required</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[['Put the X block on the platform',
+                        'The X block is hooked',],
+                      ['Pick up the X block',
+                        'There are no hooked blocks',],
+                      ['Put the X block on the Y block',
+                        'The X block is hooked',]].map((step, i) =>
+                          <tr key={'step' + i}>
+                            <td>{step[0]}</td>
+                            <td>{step[1]}</td>
+                          </tr>)
+                      }
+                    </tbody>
+                  </Table>
                 </CardBody>
               </Card>
             </Col>
