@@ -4,7 +4,7 @@ import Tree from 'react-d3-tree';
 
 class TreeGraph extends PureComponent {
   static SEPERATOR = 'seperator'
-  
+
   /**
    * Create a new node on the tree.
    *
@@ -50,7 +50,7 @@ class TreeGraph extends PureComponent {
   }
 
   static defaultProps = {
-    tree: {name: ''}
+    tree: { name: '' }
   }
 
   state = {}
@@ -69,16 +69,16 @@ class TreeGraph extends PureComponent {
     return (
       <div ref={tc => (this.treeContainer = tc)} style={{
         width: '100%',
-        height: '400px',
+        height: '600px',
         backgroundColor: 'rgb(200, 200, 200)',
         fontFamily: 'Roboto, sans-serif'
       }}>
-        <Tree 
-          data={[this.props.tree]} 
-          translate={this.state.translate} 
+        <Tree
+          data={[this.props.tree]}
+          translate={this.state.translate}
           orientation={'horizontal'}
           collapsible={false}
-          nodeSize={{x: 250, y: 50}}
+          nodeSize={{ x: 250, y: 50 }}
           nodeSvgShape={{
             shape: 'rect',
             shapeProps: {
@@ -93,7 +93,7 @@ class TreeGraph extends PureComponent {
             y: 0
           }}
           styles={{
-            links: {stroke: 'white', strokeWidth: 2 },
+            links: { stroke: 'white', strokeWidth: 2 },
             nodes: {
               node: {
                 name: { stroke: '#333', y: '10px', strokeWidth: 0.6 },
