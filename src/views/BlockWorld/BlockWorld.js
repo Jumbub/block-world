@@ -266,21 +266,6 @@ class BlockWorld extends Component {
                 <ListGroupItem color="info">Blue indicates the required action to satisfy this fact</ListGroupItem>
                 <ListGroupItem>Re-evalute facts indicates that the world must be evaluated again, because an action has taken place</ListGroupItem>
               </ListGroup>
-              <p>
-                <strong>Explanation of internal logic:</strong>
-              </p>
-              <ol className="numbered">
-                <li>Find a fact in the target world which is missing from the current world</li>
-                <li>If a fact is missing from the current world -
-                <ol>
-                    <li>Find the action which will set this fact</li>
-                    <li>Recursively call step 1, but with the required facts to perform the action as the target world</li>
-                    <li>Store the action as a step, and apply it to the current world</li>
-                    <li>Go back to step 1</li>
-                  </ol>
-                </li>
-                <li>Return the steps necessary to achieve the target world and the updated current world</li>
-              </ol>
             </CardBody>
           </Card>
         </Container>
