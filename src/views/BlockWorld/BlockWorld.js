@@ -65,9 +65,101 @@ class BlockWorld extends Component {
               This project visualises an implementation of backwards chaining to automatically stack blocks.
             </p>
             <hr className="my-2" />
+            <p>
+              <a href="https://en.wikipedia.org/wiki/Backward_chaining">
+                https://en.wikipedia.org/wiki/Backward_chaining
+              </a>
+            </p>
+            <p>
+              In this demonstration there is a robot which can pick up and place blocks.
+
+            </p>
           </Container>
         </Jumbotron>
         <Container>
+          <Row>
+            <Col>
+              <Card>
+                <CardHeader tag="h4">Available Facts</CardHeader>
+                <CardBody>
+                  <p>
+                    Facts are used to describe the world.
+                  </p>
+                  <ListGroup>
+                    <ListGroupItem>
+                      There are no hooked blocks
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      The X block is hooked
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      The X block is on the platform
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      There is a space on the platform
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      The X block is above the Y block
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      The are no blocks above the X block
+                    </ListGroupItem>
+                  </ListGroup>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col>
+              <Card>
+                <CardHeader tag="h4">Available Actions</CardHeader>
+                <CardBody>
+                  <p>
+                    Actions are used to manipulate the world.
+                  </p>
+                  <p>
+                    Each action has a set of facts which must be true in order for the action to be possible.
+                  </p>
+                  <ListGroup>
+                    <ListGroupItem>
+                      Put the X block on the platform
+                      <br /><br />
+                      <ul>
+                        <li>
+                          The X block is hooked
+                        </li>
+                        <li>
+                          There is a space on the platform
+                        </li>
+                      </ul>
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      Pick up the X block
+                      <br /><br />
+                      <ul>
+                        <li>
+                          There are no hooked blocks
+                        </li>
+                        <li>
+                          There are no blocks above the X block
+                        </li>
+                      </ul>
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      Put the X block on the Y block
+                      <br /><br />
+                      <ul>
+                        <li>
+                          The X block is hooked
+                        </li>
+                        <li>
+                          There are no blocks above the Y block
+                        </li>
+                      </ul>
+                    </ListGroupItem>
+                  </ListGroup>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
           <Row>
             <Col>
               <Card>
