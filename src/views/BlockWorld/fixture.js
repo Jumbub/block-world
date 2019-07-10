@@ -1,4 +1,5 @@
 import BlockWorld from './BlockWorld'
+import '../../index.css'
 
 export default [
   {
