@@ -59,19 +59,28 @@ class BlockWorld extends Component {
       <>
         <Jumbotron>
           <Container>
-            <h1 className="display-3">Backwards computation!</h1>
+            <h1 className="display-3">Backward chaining with logic!</h1>
             <p className="lead">
               This project visualises an implementation of backwards chaining to automatically stack blocks.
             </p>
-            <hr className="my-2" />
             <p>
               <a href="https://en.wikipedia.org/wiki/Backward_chaining">
                 https://en.wikipedia.org/wiki/Backward_chaining
               </a>
             </p>
+            <hr className="my-2" />
+            <br />
             <p>
-              In this demonstration there is a robot which can pick up and place blocks.
-
+              In this project, the robot will demonstrate the internal thought process of a robot using backward chaining, to arrange a series of blocks.
+            </p>
+            <p>
+              The robot has to follow the following rules:
+              <ul>
+                <li>The robot only has 2 actions, pick up block, and place block</li>
+                <li>The robot can only perform 1 action at a time</li>
+                <li>The robot can only pick up 1 block at a time</li>
+                <li>The robot cannot pick up blocks which have other blocks stacked above it</li>
+              </ul>
             </p>
           </Container>
         </Jumbotron>
