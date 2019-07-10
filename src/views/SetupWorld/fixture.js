@@ -24,11 +24,12 @@ export default [
     },
     state: {
       stacked: [
-        ['red', 'blue', 'green'],
+        [],
         ['blue', 'green'],
-        ['green']
+        []
       ],
-      hooked: 'red'
+      hooked: 'red',
+      availableColors: [],
     }
   },
 ]
