@@ -86,7 +86,7 @@ class BlockWorld extends Component {
         </Jumbotron>
         <Container>
           <Row>
-            <Col>
+            <Col md={6} sm={12}>
               <Card>
                 <CardHeader tag="h4">Facts</CardHeader>
                 <CardBody>
@@ -118,14 +118,13 @@ class BlockWorld extends Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col>
+            <Col md={6} sm={12}>
               <Card>
                 <CardHeader tag="h4">Actions</CardHeader>
                 <CardBody>
                   <p>
                     Actions are used to manipulate the world.
-                  </p>
-                  <p>
+                    <br />
                     Each action has a set of facts which must be true in order for the action to be possible.
                   </p>
                   <Table bordered>
@@ -154,7 +153,7 @@ class BlockWorld extends Component {
             </Col>
           </Row>
           <Row>
-            <Col>
+            <Col xl={4} lg={6} md={6} sm={12}>
               <Card>
                 <CardHeader tag="h4">Current Facts Visualised</CardHeader>
                 <CardBody>
@@ -176,7 +175,7 @@ class BlockWorld extends Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col>
+            <Col xl={4} lg={6} md={6} sm={12}>
               <Card>
                 <CardHeader tag="h4">Target Facts Visualised</CardHeader>
                 <CardBody>
@@ -198,7 +197,7 @@ class BlockWorld extends Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col>
+            <Col xl={4} lg={12} md={12} >
               {lastError &&
                 <Alert color="danger">
                   {lastError}
