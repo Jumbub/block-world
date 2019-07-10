@@ -16,8 +16,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cosmos:export": "cosmos-export",
-    "deploy": "CI=true yarn test && yarn build && aws s3 sync build/ s3://block-world --delete && yarn deploy-cosmos",
-    "deploy-cosmos": "yarn cosmos:export && aws s3 sync cosmos-export/ s3://block-world-cosmos --delete"
+    "deploy": "CI=true yarn test && yarn build && aws s3 sync build/ s3://block-world --delete"
   },
   "eslintConfig": {
     "extends": "react-app"

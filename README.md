@@ -5,8 +5,6 @@ It is developed primarily with [React][React], and [Cosmos][Cosmos]!
 
 Visit the [site][Live Site].
 
-View the [cosmos][Live Cosmos].
-
 ## Setup
 
 ### Required Software
@@ -51,7 +49,6 @@ This command will run the tests; build the app; and upload the new build to AWS 
 [Logic Programming]: https://en.wikipedia.org/wiki/Logic_programming
 [Yarn]: https://yarnpkg.com/en/docs/install
 [Live Site]: https://blockworld.jamiebray.me/
-[Live Cosmos]: https://cosmos.blockworld.jamiebray.me/
 [React]: https://reactjs.org/
 [Cosmos]: https://github.com/react-cosmos/react-cosmos
 [AWS CLI Install]: https://docs.aws.amazon.com/cli/latest/userguide/
