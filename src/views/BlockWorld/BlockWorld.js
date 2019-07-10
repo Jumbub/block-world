@@ -75,13 +75,13 @@ class BlockWorld extends Component {
             </p>
             <p>
               The robot has to follow the following rules:
-              <ul>
-                <li>The robot only has 2 actions, pick up block, and place block</li>
-                <li>The robot can only perform 1 action at a time</li>
-                <li>The robot can only pick up 1 block at a time</li>
-                <li>The robot cannot pick up blocks which have other blocks stacked above it</li>
-              </ul>
             </p>
+            <ul>
+              <li>The robot only has 2 actions, pick up block, and place block</li>
+              <li>The robot can only perform 1 action at a time</li>
+              <li>The robot can only pick up 1 block at a time</li>
+              <li>The robot cannot pick up blocks which have other blocks stacked above it</li>
+            </ul>
           </Container>
         </Jumbotron>
         <Container>
