@@ -4,7 +4,6 @@ import { Card, CardHeader, CardBody, Container, Col, Row, ListGroup, ListGroupIt
 
 import './block-world.css'
 import SetupWorld from '../SetupWorld'
-import Arrow from '../../interface/Arrow'
 import TreeGraph from '../../interface/TreeGraph'
 import WorldSolver from '../../logic/WorldSolver'
 import WorldFacts from '../../logic/WorldFacts'
