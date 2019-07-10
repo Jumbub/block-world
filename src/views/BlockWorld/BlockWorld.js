@@ -232,7 +232,7 @@ class BlockWorld extends Component {
                       {steps
                         ? steps.map((step, i) =>
                           <tr key={'step' + i}>
-                            <td scope="row">{i}</td>
+                            <td>{i}</td>
                             <td>{WorldFacts.factToString(step)}</td>
                           </tr>)
                         : null
